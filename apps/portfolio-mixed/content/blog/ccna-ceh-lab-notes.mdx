@@ -1,0 +1,18 @@
+---
+title: "Building lab evidence for the CCNA + CEH stack"
+summary: "Notes from the homelab I use to cross-train networking and ethical hacking fundamentals."
+date: "2025-07-02"
+tags:
+  - networking
+  - cybersecurity
+  - labs
+---
+
+I rotate between **Cisco Packet Tracer** and a small **Proxmox cluster** when mapping out new labs. The goal: reinforce core routing concepts while layering ethical hacking techniques on top.
+
+- **Packet Tracer for design speed.** I sketch topologies quickly, experiment with OSPF areas, and document the expected routing tables.
+- **GNS3 with real images.** For scenarios that require IOS features missing in Packet Tracer, I switch to GNS3 to run full `show` and `debug` commands.
+- **Azure and AttackBox.** Security labs live in disposable VMs. I spin up Windows Server, Ubuntu, and Kali variants, snapshotting between stages so rollback is painless.
+- **Evidence and automation.** Python + Netmiko captures `show` outputs after each change, while Obsidian stores the markdown runbooks.
+
+Treating the lab like production — with tickets, evidence folders, and QA checklists — keeps the habits sharp while I prep for certification exams.

@@ -1,0 +1,22 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 480'>
+  <defs>
+    <linearGradient id='portfolio-grad' x1='0%' y1='0%' x2='100%' y2='100%'>
+      <stop offset='0%' stop-color='#0f172a'/>
+      <stop offset='50%' stop-color='#1e293b'/>
+      <stop offset='100%' stop-color='#22d3ee'/>
+    </linearGradient>
+  </defs>
+  <rect width='800' height='480' fill='url(#portfolio-grad)' rx='32'/>
+  <g fill='white' opacity='0.18'>
+    <rect x='120' y='120' width='200' height='140' rx='16'/>
+    <rect x='360' y='180' width='320' height='180' rx='24'/>
+    <circle cx='640' cy='140' r='48'/>
+    <path d='M200 340h180c18 0 32 14 32 32v8H168v-8c0-18 14-32 32-32z'/>
+  </g>
+  <text x='50%' y='52%' dominant-baseline='middle' text-anchor='middle' fill='white'
+        font-family='Inter,Segoe UI,Helvetica,Arial,sans-serif' font-size='34' font-weight='600'>
+    Portfolio Experience Platform
+  </text>
+  <text x='50%' y='65%' dominant-baseline='middle' text-anchor='middle' fill='white' opacity='0.75'
+        font-family='Inter,Segoe UI,Helvetica,Arial,sans-serif' font-size='18'>Next.js • Tailwind • Framer Motion</text>
+</svg>

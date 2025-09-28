@@ -1,0 +1,18 @@
+---
+title: "Preflight checks for secure Power BI automation"
+summary: "How I harden Power BI dataflows before shipping dashboards to 160+ public officers."
+date: "2025-08-15"
+tags:
+  - analytics
+  - power-bi
+  - governance
+---
+
+When a dashboard is going to be consumed by regulators, I follow a security-first deployment sequence. Here are the repeatable checks I run before any dataset goes live:
+
+1. **Row-level security rehearsal.** I validate role assignments against synthetic records so no one sees out-of-band rows. PowerShell scripts help export the membership matrix ead-hoc for review.
+2. **Data gateway verification.** A small Azure Automation runbook pings the enterprise gateway and checks the run history for the past seven days. If I spot failures, I investigate before final publish.
+3. **MFA coverage.** Licensing reviews and Azure AD sign-in logs confirm that every intended viewer has multi-factor auth enforced. If they don't, I block access until they do.
+4. **Operational logging.** Power BI activity logs feed a Log Analytics workspace. I add alert rules for unusual download volumes or export attempts.
+
+Only after all four controls pass muster do I hand dashboards to stakeholders. The whole workflow is documented in Confluence so anyone can rerun it without waiting for me."

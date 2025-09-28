@@ -1,0 +1,25 @@
+{
+  "name": "haziqhtech-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace portfolio",
+    "dev:portfolio": "npm run dev --workspace portfolio",
+    "dev:timeline": "npm run dev --workspace timeline",
+    "dev:mixed": "npm --workspace apps/portfolio-mixed run dev",
+    "build": "npm run build --workspace portfolio",
+    "build:mixed": "npm --workspace apps/portfolio-mixed run build",
+    "lint": "npm run lint --workspace portfolio",
+    "lint:portfolio": "npm --workspace apps/portfolio run lint",
+    "lint:timeline": "npm --workspace apps/timeline run lint",
+    "fmt": "prettier . --write",
+    "start": "npm run start --workspace portfolio"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

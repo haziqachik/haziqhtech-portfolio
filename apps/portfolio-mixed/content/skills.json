@@ -1,0 +1,11 @@
+[
+  { "name": "Network Fundamentals (CCNA Labs)", "level": "In Progress", "group": "Security" },
+  { "name": "Firewall & ACL Hardening", "level": "Intermediate", "group": "Security" },
+  { "name": "Vulnerability Assessment & CEH Playbooks", "level": "Intermediate", "group": "Security" },
+  { "name": "Azure Security & Governance", "level": "Foundational", "group": "Cloud" },
+  { "name": "Power BI Governance (Power Query/M, DAX)", "level": "Advanced", "group": "Analytics" },
+  { "name": "UiPath RPA & FormSG Automation", "level": "Advanced", "group": "Automation" },
+  { "name": "Python Automation (Netmiko, Pandas)", "level": "Intermediate", "group": "Engineering" },
+  { "name": "Postman & API Testing", "level": "Intermediate", "group": "Tooling" },
+  { "name": "Documentation & Stakeholder Enablement", "level": "Advanced", "group": "Collaboration" }
+]

@@ -1,0 +1,60 @@
+[
+  {
+    "date": "Nov 2024 - Present",
+    "title": "Executive, Data Analyst",
+    "org": "Building Construction Authority",
+    "bullets": [
+      "Hardened the agency's Power BI estate with MFA and role-based access; 160+ officers now consume governed dashboards covering 70% of CRS firms.",
+      "Automated FormSG survey dispatch and QA with Postman + UiPath, trimming manual processing time by roughly 30% per survey cycle.",
+      "Standardized data-cleansing playbooks that feed cross-agency CAW and SkillsFuture taskforces with audit-ready datasets."
+    ]
+  },
+  {
+    "date": "Jun 2024 - Sep 2024",
+    "title": "UAT Tester",
+    "org": "Central Provident Fund Board",
+    "bullets": [
+      "Authored 40 end-to-end test scripts for new CAPI releases and surfaced 95 defects prior to production cutover.",
+      "Built UiPath helpers that shortened regression runs by about 40% while keeping evidence collection traceable.",
+      "Aligned acceptance gates with survey ops to ensure field teams received reliable tooling on day one."
+    ]
+  },
+  {
+    "date": "Aug 2020 - Dec 2022",
+    "title": "Radar Operator Officer",
+    "org": "Singapore Police Force",
+    "bullets": [
+      "Monitored a 25 nautical mile maritime zone, escalating an average of 12 actionable incidents per month for interception.",
+      "Maintained radar readiness through preventive maintenance and shift SOPs, keeping systems available for 24/7 operations.",
+      "Safeguarded Singapore Territorial Waters as part of a port ecosystem handling ~140,000 vessel movements yearly, supporting the economy\u2019s tax-friendly maritime hub and Tuas Mega Port ambitions."
+    ]
+  },
+  {
+    "date": "Feb 2020 - Jul 2020",
+    "title": "Information Technology Officer",
+    "org": "Ministry of Manpower",
+    "bullets": [
+      "Facilitated 15 automation clinics and translated needs into UiPath workflows, saving an estimated 120 staff hours per quarter.",
+      "Awarded testimonial for dependable delivery and stakeholder support."
+    ]
+  },
+  {
+    "date": "Jul 2019 - Feb 2020",
+    "title": "Software Engineer",
+    "org": "Government Technology Agency",
+    "bullets": [
+      "Built UiPath automations processing 5,000+ SG Work Pass records per run and packaged video training for non-IT teams.",
+      "Managed licensing, UAT, and post-implementation support while scripting data-handling automations for a blockchain pilot.",
+      "Recognized with a service testimonial for cross-agency support."
+    ]
+  },
+  {
+    "date": "May 2016 - Dec 2016",
+    "title": "Desktop Support Engineer",
+    "org": "NCS Pte Ltd",
+    "bullets": [
+      "Resolved 200+ onsite support requests with a 96% satisfaction rating and maintained inventory accuracy for client hardware.",
+      "Supported network troubleshooting and end-user enablement during infrastructure changes."
+    ]
+  }
+]

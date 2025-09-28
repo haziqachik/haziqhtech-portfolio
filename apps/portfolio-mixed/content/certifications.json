@@ -1,0 +1,37 @@
+[
+  {
+    "name": "EC-Council Certified Ethical Hacker (CEH)",
+    "issuer": "NTUC LearningHub",
+    "issued": "Aug 2025"
+  },
+  {
+    "name": "PL-300: Microsoft Power BI Data Analyst",
+    "issuer": "Microsoft",
+    "issued": "Jan 2025"
+  },
+  {
+    "name": "Google Cybersecurity Professional Certificate",
+    "issuer": "Coursera",
+    "issued": "Jan 2025"
+  },
+  {
+    "name": "Power BI Beginner to Pro Workshop",
+    "issuer": "Pragmatic Works",
+    "issued": "Jan 2024"
+  },
+  {
+    "name": "C++ Masterclass",
+    "issuer": "Udemy",
+    "issued": "Jan 2024"
+  },
+  {
+    "name": "CCNA (Cisco 200-301)",
+    "issuer": "Cisco",
+    "issued": "In progress"
+  },
+  {
+    "name": "Azure Security Engineer Associate (AZ-500)",
+    "issuer": "Microsoft",
+    "issued": "In progress"
+  }
+]

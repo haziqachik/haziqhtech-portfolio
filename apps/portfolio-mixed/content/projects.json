@@ -1,0 +1,88 @@
+[
+  {
+    "title": "Portfolio Experience Platform",
+    "description": "Monorepo powering haziqhtech.sg with dynamic content, dual apps, and shared UI primitives.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "EmailJS",
+      "Contentlayer"
+    ],
+    "href": "https://haziqhtech.sg",
+    "repo": "https://github.com/haziqhtech/portfolio",
+    "year": 2025,
+    "image": "/images/projects/portfolio-experience-platform.svg"
+  },
+  {
+    "title": "Workforce Security Dashboards",
+    "description": "Power BI platform enforcing row-level security and MFA while delivering workforce intelligence for CRS-regulated firms.",
+    "tech": [
+      "Power BI",
+      "Power Query",
+      "DAX",
+      "Azure AD"
+    ],
+    "href": "https://haziqhtech.sg/projects/workforce-security-dashboards",
+    "repo": "https://github.com/haziqhtech/power-bi-governance",
+    "year": 2025,
+    "image": "/images/projects/workforce-security-dashboards.svg"
+  },
+  {
+    "title": "FormSG Survey Automation",
+    "description": "Least-privilege FormSG workflows with Postman-triggered dispatch and UiPath QA helpers that cut survey turnaround time.",
+    "tech": [
+      "FormSG",
+      "Postman",
+      "UiPath",
+      "PowerShell"
+    ],
+    "href": "https://haziqhtech.sg/projects/formsg-automation",
+    "repo": "https://github.com/haziqhtech/formsg-automation-playbook",
+    "year": 2024,
+    "image": "/images/projects/formsg-survey-automation.svg"
+  },
+  {
+    "title": "Operations RPA Platform",
+    "description": "Self-hosted UiPath bots aggregating e-commerce telemetry, exporting analytics, and emailing stakeholders through a custom UI.",
+    "tech": [
+      "UiPath",
+      "SQL",
+      "WinForms",
+      "Excel"
+    ],
+    "href": "https://haziqhtech.sg/projects/operations-rpa-platform",
+    "repo": "https://github.com/haziqhtech/operations-rpa",
+    "year": 2023,
+    "image": "/images/projects/operations-rpa-platform.svg"
+  },
+  {
+    "title": "Network Engineering Lab Series",
+    "description": "Documented Packet Tracer and GNS3 labs covering OSPF, ACL hardening, and automated validation with Python + Netmiko.",
+    "tech": [
+      "Cisco Packet Tracer",
+      "GNS3",
+      "Python",
+      "Netmiko"
+    ],
+    "href": "https://haziqhtech.sg/projects/network-labs",
+    "repo": "https://github.com/haziqhtech/network-labs",
+    "year": 2022,
+    "image": "/images/projects/network-engineering-labs.svg"
+  },
+  {
+    "title": "CEH Study Hub",
+    "description": "Responsive CEH knowledge base with reconnaissance-to-persistence write-ups, live demos, and interviewer-ready bookmarks.",
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "GitHub Pages"
+    ],
+    "href": "https://haziqhtech.sg/projects/ceh-study-hub",
+    "repo": "https://github.com/haziqhtech/ceh-pages",
+    "year": 2021,
+    "image": "/images/projects/ceh-study-hub.svg"
+  }
+]
