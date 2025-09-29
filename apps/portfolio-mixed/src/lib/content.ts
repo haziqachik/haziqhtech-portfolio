@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { cache } from "react";
 import { z } from "zod";
+import 'server-only';
 
 const basePath = path.join(process.cwd(), "content");
 

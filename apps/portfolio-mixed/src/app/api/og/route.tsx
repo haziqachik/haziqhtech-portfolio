@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getProfile } from "@/lib/content";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET() {
   const profile = getProfile();

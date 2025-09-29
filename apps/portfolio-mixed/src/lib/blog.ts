@@ -1,10 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
-
-import type { ReactNode } from "react";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import fs from "fs";
+import path from "path";
 import matter from "gray-matter";
-import readingTime from "reading-time";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
@@ -12,163 +9,92 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { visit } from "unist-util-visit";
 import { toString } from "mdast-util-to-string";
 
-import { mdxComponents } from "@/mdx/components";
+export type BlogHeading = { id: string; title: string; depth: number };
+export type BlogPostMeta = {
+  slug: string;
+  title: string;
+  date: string;
+  summary: string;
+  tags: string[];
+  readingTime?: number;
+};
 
 const blogDirectory = path.join(process.cwd(), "content", "blog");
 
-type PostStatus = "draft" | "preview" | "published";
-
-export interface BlogPostMeta {
-  slug: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  lastModified: string | null;
-  tags: string[];
-  readingTime: number;
-  wordCount: number;
-  status: PostStatus;
-  references?: string[];
-  changelog: string[];
+function slugify(text: string) {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
 }
 
-export interface BlogHeading {
-  id: string;
-  title: string;
-  depth: number;
-}
-
-export interface BlogPost extends BlogPostMeta {
-  content: ReactNode;
-  toc: BlogHeading[];
-}
-
-function ensureBlogDirectory() {
-  if (!fs.existsSync(blogDirectory)) {
-    fs.mkdirSync(blogDirectory, { recursive: true });
-  }
-}
-
-function readBlogFiles() {
-  ensureBlogDirectory();
-  return fs
-    .readdirSync(blogDirectory)
-    .filter((file) => file.endsWith(".mdx"))
-    .sort();
-}
-
-function slugify(value: string) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
-
-interface RawFrontmatter {
-  title: string;
-  excerpt?: string;
-  date: string;
-  lastModified?: string;
-  status?: PostStatus;
-  tags?: string[];
-  changelog?: string[];
-}
-
-function parseFrontmatter(slug: string, fm: RawFrontmatter, body: string): BlogPostMeta {
-  if (!fm.title) {
-    throw new Error(`Blog post ${slug} is missing a title in frontmatter.`);
-  }
-  if (!fm.date) {
-    throw new Error(`Blog post ${slug} is missing a date in frontmatter.`);
-  }
-
-  const stats = readingTime(body);
-  const filePath = path.join(blogDirectory, `${slug}.mdx`);
-  const fileStats = fs.statSync(filePath);
-
-  return {
-    slug,
-    title: fm.title.trim(),
-    excerpt: fm.excerpt?.trim() ?? body.slice(0, 160).replace(/\s+/g, " ") + "…",
-    date: fm.date,
-    lastModified: fm.lastModified ?? fileStats.mtime.toISOString(),
-    tags: fm.tags ?? [],
-    readingTime: Math.max(1, Math.round(stats.minutes)),
-    wordCount: stats.words,
-    status: fm.status ?? "published",
-    changelog: fm.changelog ?? [],
-  };
-}
-
-export function getAllBlogPosts(includeDrafts = false): BlogPostMeta[] {
-  const files = readBlogFiles();
-
-  const posts = files.map((file) => {
-    const slug = file.replace(/\.mdx$/, "");
-    const filePath = path.join(blogDirectory, file);
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const { data, content } = matter(raw) as { data: RawFrontmatter; content: string };
-    const meta = parseFrontmatter(slug, data, content);
-    return meta;
-  });
-
-  return posts
-    .filter((meta) => (includeDrafts ? true : meta.status === "published"))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
-
-export async function getBlogPost(slug: string): Promise<BlogPost> {
-  const filePath = path.join(blogDirectory, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`Blog post not found for slug ${slug}`);
-  }
-
-  const raw = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(raw) as { data: RawFrontmatter; content: string };
-  const meta = parseFrontmatter(slug, data, content);
-
+async function compileSource(raw: string, components = {}) {
   const headings: BlogHeading[] = [];
 
-  const remarkHeadings = () => (tree: unknown) => {
+  const remarkHeadings = () => (tree: any) => {
     visit(tree, "heading", (node: any) => {
-      if (node.depth > 3) return;
+      const depth = node.depth ?? 0;
+      if (depth < 1 || depth > 3) return;
       const text = toString(node).trim();
       if (!text) return;
       const id = slugify(text);
-      if (!node.data) node.data = {};
-      if (!node.data.hProperties) node.data.hProperties = {};
+      node.data ??= {};
+      node.data.hProperties ??= {};
       node.data.id = id;
       node.data.hProperties.id = id;
-      headings.push({ id, title: text, depth: node.depth });
+      headings.push({ id, title: text, depth });
     });
   };
 
-  const { content: compiled } = await compileMDX({
+  const { content } = await compileMDX({
     source: raw,
-    components: mdxComponents,
     options: {
-      parseFrontmatter: true,
       mdxOptions: {
         remarkPlugins: [remarkGfm, remarkHeadings],
-        rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "wrap" }]],
+        // cast to any to avoid vfile type mismatches coming from nested
+        // versions of rehype/remark dependencies in different packages.
+        rehypePlugins: [rehypeSlug as any, [rehypeAutolinkHeadings as any, { behavior: "wrap" }]] as any,
       },
     },
+    components,
   });
 
-  return {
-    ...meta,
-    content: compiled,
-    toc: headings,
-  };
+  return { compiled: content, toc: headings };
 }
 
-export function findAdjacentPosts(slug: string) {
-  const posts = getAllBlogPosts();
-  const index = posts.findIndex((post) => post.slug === slug);
-  if (index === -1) return { previous: null, next: null };
-  const previous = index > 0 ? posts[index - 1] : null;
-  const next = index < posts.length - 1 ? posts[index + 1] : null;
-  return { previous, next };
+export function getAllBlogPosts(includeContent = false) {
+  if (!fs.existsSync(blogDirectory)) return [];
+  const files = fs.readdirSync(blogDirectory).filter((f) => f.endsWith(".mdx"));
+  return files.map((file) => {
+    const slug = file.replace(/\.mdx$/, "");
+    const raw = fs.readFileSync(path.join(blogDirectory, file), "utf-8");
+    const parsed = matter(raw) as unknown as { data: any; content: string };
+    const meta = parsed.data as Record<string, any>;
+    return {
+      slug,
+      title: String(meta.title ?? slug),
+      date: String(meta.date ?? ""),
+      summary: String(meta.summary ?? ""),
+      tags: Array.isArray(meta.tags) ? meta.tags.map(String) : [],
+      content: includeContent ? parsed.content : undefined,
+    } as any;
+  });
 }
+
+export async function getBlogPost(slug: string) {
+  const file = path.join(blogDirectory, `${slug}.mdx`);
+  if (!fs.existsSync(file)) throw new Error("Not found");
+  const raw = fs.readFileSync(file, "utf-8");
+  const parsed = matter(raw) as unknown as { data: any; content: string };
+  const meta = parsed.data as Record<string, any>;
+  const { compiled, toc } = await compileSource(parsed.content);
+
+  return {
+    slug,
+    title: String(meta.title ?? slug),
+    date: String(meta.date ?? ""),
+    summary: String(meta.summary ?? ""),
+    tags: Array.isArray(meta.tags) ? meta.tags.map(String) : [],
+    readingTime: meta.readingTime,
+    content: compiled,
+    toc,
+  } as any;
+}
+

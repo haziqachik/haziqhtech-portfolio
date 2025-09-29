@@ -1,14 +1,18 @@
-﻿export default function AboutPage() {
+﻿import Image from "next/image";
+
+export default function AboutPage() {
   return (
     <main className="space-y-12">
       <section className="grid gap-10 md:grid-cols-[minmax(0,260px)_1fr] md:items-center">
         <div className="flex justify-center md:justify-start">
           <div className="h-48 w-48 overflow-hidden rounded-full border-4 border-blue-100 bg-gradient-to-br from-blue-200 via-blue-100 to-white shadow-xl">
-            <img
+            <Image
               src="/profile.jpg"
               alt="Portrait of Haziq Asyraaf"
+              width={192} // matches h-48 w-48
+              height={192}
               className="h-full w-full object-cover"
-              loading="lazy"
+              priority
             />
           </div>
         </div>

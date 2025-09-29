@@ -4,18 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog";
 
-interface BlogPostPageProps {
-  params: { slug: string };
-}
+type Params = { slug: string };
 
 export async function generateStaticParams() {
   const posts = getAllBlogPosts(true);
-  return posts.map((post) => ({ slug: post.slug }));
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export async function generateMetadata({ params }: { params: Promise<Params> }) {
   try {
-    const post = await getBlogPost(params.slug);
+    const p = await params;
+    const post = await getBlogPost(p.slug);
     return {
       title: `${post.title} | Haziq Asyraaf`,
       description: post.summary,
@@ -25,16 +24,18 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   }
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function Page({ params }: { params: Promise<Params> }) {
   try {
-    const post = await getBlogPost(params.slug);
+    const p = await params;
+    const post = await getBlogPost(p.slug);
+
     const formattedDate = new Date(post.date).toLocaleDateString(undefined, {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
 
-    return (
+  return (
       <article className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-4 md:px-0">
         <header className="relative overflow-hidden rounded-3xl border border-primary/25 bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.18),_transparent_65%)] p-10 shadow-lg shadow-primary/10 md:p-14">
           <div className="flex flex-col gap-5">
@@ -46,7 +47,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <p className="max-w-3xl text-base text-muted-foreground md:text-lg">{post.summary}</p>
             </div>
             <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm">
-              {post.tags.map((tag) => (
+              {post.tags.map((tag: string) => (
                 <Badge key={`${post.slug}-${tag}`} variant="outline" className="border-border/60 font-medium uppercase tracking-[0.2em]">
                   {tag}
                 </Badge>
@@ -60,13 +61,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:items-start">
           <div className="rounded-3xl border border-border/50 bg-background/80 p-8 shadow-lg shadow-primary/5">
-            <div
-              className="prose prose-slate dark:prose-invert max-w-none
-                         prose-p:my-6 prose-ul:my-6 prose-ol:my-6
-                         prose-headings:mt-10 prose-headings:mb-4
-                         prose-li:marker:text-primary"
-            >
-              {post.content /* MDX React content */}
+            <div className="prose prose-slate dark:prose-invert max-w-none prose-p:my-6 prose-ul:my-6 prose-ol:my-6 prose-headings:mt-10 prose-headings:mb-4 prose-li:marker:text-primary">
+              {post.content /* MDX content as React nodes */}
             </div>
           </div>
 
@@ -75,14 +71,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="rounded-2xl border border-border/60 bg-card/80 p-6 shadow-soft">
                 <h2 className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">On this page</h2>
                 <nav className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  {post.toc.map((heading) => (
+                  {post.toc.map((h: { id: string; title: string; depth: number }) => (
                     <a
-                      key={heading.id}
-                      href={`#${heading.id}`}
+                      key={h.id}
+                      href={`#${h.id}`}
                       className="block rounded-lg px-3 py-2 transition hover:bg-muted hover:text-foreground"
-                      style={{ marginLeft: heading.depth > 2 ? 16 : 0 }}
+                      style={{ marginLeft: h.depth > 2 ? 16 : 0 }}
                     >
-                      {heading.title}
+                      {h.title}
                     </a>
                   ))}
                 </nav>
@@ -90,25 +86,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </aside>
           ) : null}
         </div>
-
-        {post.toc.length ? (
-          <aside className="lg:hidden">
-            <div className="rounded-2xl border border-border/60 bg-card/80 p-5 shadow-soft">
-              <h2 className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">On this page</h2>
-              <nav className="mt-4 space-y-2 text-sm text-muted-foreground">
-                {post.toc.map((heading) => (
-                  <a
-                    key={`${heading.id}-mobile`}
-                    href={`#${heading.id}`}
-                    className="block rounded-lg px-3 py-2 transition hover:bg-muted hover:text-foreground"
-                  >
-                    {heading.title}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </aside>
-        ) : null}
 
         <Card className="border-border/70 bg-card/90">
           <CardHeader>

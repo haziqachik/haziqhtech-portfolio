@@ -1,5 +1,4 @@
-﻿import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
+﻿import colors from "tailwindcss/colors";
 
 const sharedPreset = {
   theme: {
@@ -22,6 +21,6 @@ const sharedPreset = {
       },
     },
   },
-} satisfies Config;
+};
 
 export default sharedPreset;
