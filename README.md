@@ -52,3 +52,31 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
     "repo": "https://github.com/haziqhtech/zero-trust-platform"
   }
   ```
+
+## 📄 Automated Resume Sync
+
+Keep your portfolio resume up-to-date with minimal effort using automated sync tools.
+
+### Quick Start (Windows)
+
+**Double-click:** `scripts/sync-resume.bat`
+
+This will automatically:
+1. Find your latest resume PDF in `G:\My Drive\All award\Resume_CVs`
+2. Copy it to the portfolio project
+3. Commit and push to GitHub
+4. Trigger Vercel deployment (~2 min to live)
+
+### Alternative: GitHub Actions
+
+Trigger resume updates from anywhere:
+1. Go to [Actions → Sync Resume](https://github.com/haziqachik/haziqhtech-portfolio/actions/workflows/sync-resume.yml)
+2. Click **"Run workflow"**
+3. (Optional) Provide a direct URL to download a resume PDF
+4. Click **"Run workflow"**
+
+### Documentation
+
+- **Quick reference**: See `QUICK_REFERENCE.md` for common commands
+- **Full documentation**: See `scripts/README.md` for detailed setup, troubleshooting, and advanced options
+- **Workflow file**: `.github/workflows/sync-resume.yml` for server-side automation
