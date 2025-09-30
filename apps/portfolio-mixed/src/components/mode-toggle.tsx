@@ -5,7 +5,11 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export function ModeToggle() {
+interface ModeToggleProps {
+  className?: string;
+}
+
+export function ModeToggle({ className }: ModeToggleProps = {}) {
   const { setTheme, theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -21,6 +25,7 @@ export function ModeToggle() {
       size="icon"
       aria-label="Toggle theme"
       onClick={() => setTheme(current === "dark" ? "light" : "dark")}
+      className={className}
     >
       {mounted && current === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </Button>
