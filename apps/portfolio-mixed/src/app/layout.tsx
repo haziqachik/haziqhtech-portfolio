@@ -96,12 +96,25 @@ export default function RootLayout({
                     </SheetTrigger>
                     <SheetContent className="w-full max-w-xs sm:max-w-sm">
                       <nav className="mt-12 flex flex-col gap-3">
-                        {navLinks.map((item) => (
-                          <SheetClose asChild key={item.href}>
-                            <MobileNavLink item={item} />
-                          </SheetClose>
+                        {navLinks.map((item, idx) => (
+                          <div
+                            key={item.href}
+                            style={{ animationDelay: `${idx * 40}ms` }}
+                            className="animate-in fade-in slide-in-from-right-2 duration-200"
+                          >
+                            <SheetClose asChild>
+                              <MobileNavLink item={item} />
+                            </SheetClose>
+                          </div>
                         ))}
                       </nav>
+                      <div className="pointer-events-none fixed inset-x-0 bottom-0 mx-4 mb-4">
+                        <div className="pointer-events-auto rounded-xl border border-border bg-background/95 p-3 shadow-xl backdrop-blur">
+                          <Link href="/contact" className="flex w-full items-center justify-center">
+                            <UiButton className="w-full" variant="default">Contact me</UiButton>
+                          </Link>
+                        </div>
+                      </div>
                     </SheetContent>
                   </Sheet>
                 </div>

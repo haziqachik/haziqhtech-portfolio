@@ -4,7 +4,9 @@ import * as React from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const Sheet = SheetPrimitive.Root;
+const Sheet = (props: React.ComponentProps<typeof SheetPrimitive.Root>) => {
+  return <SheetPrimitive.Root {...props} />;
+};
 
 const SheetTrigger = SheetPrimitive.Trigger;
 
@@ -36,6 +38,8 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
         )}
         {...props}
       >
+        {/* Prevent background scroll when open */}
+        <style>{`body { overflow: hidden; }`}</style>
         {children}
         <SheetPrimitive.Close className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground transition hover:text-foreground">
           <X className="h-5 w-5" />
