@@ -1,0 +1,102 @@
+---
+name: Sync Resume from Google Drive
+
+# This workflow can be triggered manually or on a schedule
+# It's designed to work with Google Drive API for automated resume updates
+
+on:
+  # Manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      resume_url:
+        description: >-
+          Direct link to resume PDF (optional - if provided,
+          downloads from URL)
+        required: false
+        type: string
+
+  # Scheduled runs (optional - uncomment to enable)
+  # schedule:
+  #   # Runs every Monday at 9 AM UTC (adjust to your timezone)
+  #   - cron: '0 9 * * 1'
+
+permissions:
+  contents: write  # Needed to push changes
+
+jobs:
+  sync-resume:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Download resume from URL (if provided)
+        if: github.event.inputs.resume_url != ''
+        run: |
+          resume_url="${{ github.event.inputs.resume_url }}"
+          echo "Downloading resume from: $resume_url"
+          dest="apps/portfolio-mixed/public/Haziq_Asyraaf_CV.pdf"
+          curl -L -o "$dest" "$resume_url"
+
+          # Verify the file is a valid PDF
+          if file "$dest" | grep -q "PDF"; then
+            echo "✓ Valid PDF downloaded"
+          else
+            echo "✗ Downloaded file is not a valid PDF"
+            exit 1
+          fi
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          pdf_path="apps/portfolio-mixed/public/Haziq_Asyraaf_CV.pdf"
+          # Check if the resume file has changed
+          if git diff --quiet "$pdf_path"; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in resume file"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in resume file"
+          fi
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          pdf_path="apps/portfolio-mixed/public/Haziq_Asyraaf_CV.pdf"
+          git add "$pdf_path"
+          git commit -m "chore: auto-update resume PDF via GitHub Actions"
+          git push origin main
+
+          echo "✓ Resume updated and pushed to GitHub"
+          echo "✓ Vercel will automatically deploy the changes"
+
+      - name: No changes
+        if: steps.check_changes.outputs.has_changes == 'false'
+        run: |
+          echo "ℹ Resume is already up-to-date"
+          echo "ℹ No deployment needed"
+
+      - name: Deployment info
+        if: steps.check_changes.outputs.has_changes == 'true'
+        run: |
+          echo "================================================"
+          echo "Resume update completed successfully!"
+          echo "================================================"
+          echo ""
+          echo "Next steps:"
+          echo "  1. Vercel will automatically detect the push"
+          echo "  2. Deployment will start in ~30 seconds"
+          echo "  3. Live site will update in 1-2 minutes"
+          echo ""
+          echo "Visit: https://haziqhtech.sg/resume"
+          echo "Monitor: https://vercel.com/haziqachik/haziqhtech-portfolio"
+          echo ""
