@@ -1,0 +1,4 @@
+# Ensure JSON files use LF to avoid CI/Vercel parsing issues on Windows
+*.json text eol=lf
+# Explicitly ensure vercel.json uses LF
+vercel.json text eol=lf
