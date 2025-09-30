@@ -65,10 +65,16 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0a0a" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background antialiased`}>
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col">
-            <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur">
+            <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 md:backdrop-blur">
               <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4">
                 <Link href="/" className="text-lg font-semibold tracking-tight">
                   Haziq Asyraaf
@@ -121,7 +127,7 @@ export default function RootLayout({
               </div>
             </header>
             <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-12 sm:py-16">{children}</main>
-            <footer className="border-t border-border/80 bg-background/85 backdrop-blur">
+            <footer className="border-t border-border/80 bg-background/85 md:backdrop-blur">
               <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
                 <p className="flex flex-wrap items-center gap-2">
                   <span>© {currentYear} HaziqhTech</span>
