@@ -28,12 +28,10 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Content>, React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>>(
   ({ className, children, ...props }, ref) => (
     <SheetPortal>
-      <SheetOverlay />
       <SheetPrimitive.Content
         ref={ref}
         className={cn(
-          "fixed inset-y-0 right-0 z-60 w-full max-w-sm border-l border-border bg-background p-6 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-soft outline-none",
-          "data-[state=open]:animate-in data-[state=open]:slide-in-from-right data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right",
+          "fixed inset-y-0 right-0 z-60 w-full max-w-sm border-l border-border bg-background p-6 outline-none",
           className,
         )}
         {...props}

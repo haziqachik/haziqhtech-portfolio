@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetClose, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button as UiButton } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
-import { DesktopNav, MobileNavLink, type NavLinkItem } from "@/components/site-nav";
+import { DesktopNav, type NavLinkItem } from "@/components/site-nav";
 import { getProfile } from "@/lib/content";
 import "./globals.css";
 
@@ -86,40 +86,38 @@ export default function RootLayout({
                   <ModeToggle />
                   <Sheet>
                     <SheetTrigger asChild>
-                      <UiButton variant="ghost" size="icon" className="md:hidden">
-                        <span className="sr-only">Open navigation</span>
+                      <UiButton variant="outline" size="icon" className="md:hidden">
+                        <span className="sr-only">Open navigation menu</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
-                          strokeWidth="1.5"
+                          strokeWidth="2"
                           className="h-5 w-5"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 7.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
                         </svg>
                       </UiButton>
                     </SheetTrigger>
-                    <SheetContent className="w-full max-w-xs sm:max-w-sm">
-                      <nav className="mt-12 flex flex-col gap-3">
-                        {navLinks.map((item, idx) => (
-                          <div
-                            key={item.href}
-                            style={{ animationDelay: `${idx * 40}ms` }}
-                            className="animate-in fade-in slide-in-from-right-2 duration-200"
-                          >
-                            <SheetClose asChild>
-                              <MobileNavLink item={item} />
+                    <SheetContent className="w-80 p-6">
+                      <div className="flex flex-col h-full">
+                        <SheetHeader className="text-left">
+                          <SheetTitle>Menu</SheetTitle>
+                        </SheetHeader>
+                        
+                        <nav className="flex flex-col space-y-1 mt-8 flex-1">
+                          {navLinks.map((item) => (
+                            <SheetClose asChild key={item.href}>
+                              <Link
+                                href={item.href}
+                                className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                              >
+                                {item.label}
+                              </Link>
                             </SheetClose>
-                          </div>
-                        ))}
-                      </nav>
-                      <div className="pointer-events-none fixed inset-x-0 bottom-0 mx-4 mb-4">
-                        <div className="pointer-events-auto rounded-xl border border-border bg-background/95 p-3 shadow-xl backdrop-blur">
-                          <Link href="/contact" className="flex w-full items-center justify-center">
-                            <UiButton className="w-full" variant="default">Contact me</UiButton>
-                          </Link>
-                        </div>
+                          ))}
+                        </nav>
                       </div>
                     </SheetContent>
                   </Sheet>

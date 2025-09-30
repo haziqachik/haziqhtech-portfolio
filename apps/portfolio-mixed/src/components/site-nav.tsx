@@ -57,10 +57,10 @@ export function MobileNavLink({ item }: { item: NavLinkItem }) {
       href={item.href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "rounded-full px-4 py-3 text-base font-medium transition",
+        "block rounded-lg px-4 py-3 text-base font-medium transition-colors hover:bg-muted",
         active
-          ? "border border-primary/40 bg-primary/10 text-foreground"
-          : "border border-transparent text-muted-foreground hover:border-primary/30 hover:text-foreground",
+          ? "bg-primary text-primary-foreground"
+          : "text-foreground hover:text-foreground",
       )}
     >
       {item.label}
