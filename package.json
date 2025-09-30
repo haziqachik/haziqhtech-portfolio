@@ -16,10 +16,21 @@
                     "lint":  "npm run lint --workspace portfolio",
                     "lint:portfolio":  "npm --workspace apps/portfolio run lint",
                     "lint:timeline":  "npm --workspace apps/timeline run lint",
-                    "fmt":  "prettier . --write",
+                                            "fmt":  "prettier . --write",
+                                            "prepare": "husky",
+                                            "check:bom": "node scripts/remove-bom.js --check",
+                                            "fix:bom": "node scripts/remove-bom.js --fix",
                     "start":  "npm run start --workspace portfolio"
                 },
-    "devDependencies":  {
-                            "prettier":  "^3.3.3"
-                        }
+        "devDependencies":  {
+                                                            "prettier":  "^3.3.3",
+                                                            "husky": "^9.0.11",
+                                                            "lint-staged": "^15.2.10"
+                                                    },
+        "lint-staged": {
+            "**/*.json": [
+                "node scripts/remove-bom.js --fix",
+                "prettier --write"
+            ]
+        }
 }
