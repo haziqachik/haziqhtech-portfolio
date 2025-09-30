@@ -1,3 +1,4 @@
+"use client";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import { X } from "lucide-react";
@@ -15,7 +16,7 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
   ({ className, ...props }, ref) => (
     <SheetPrimitive.Overlay
       ref={ref}
-      className={cn("fixed inset-0 z-40 bg-black/40 backdrop-blur-sm", className)}
+      className={cn("fixed inset-0 z-50 bg-black/40 backdrop-blur-sm", className)}
       {...props}
     />
   ),
@@ -29,7 +30,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
       <SheetPrimitive.Content
         ref={ref}
         className={cn(
-          "fixed inset-y-0 right-0 z-50 w-full max-w-sm border-l border-border bg-card p-6 shadow-soft outline-none",
+          "fixed inset-y-0 right-0 z-60 w-full max-w-sm border-l border-border bg-background p-6 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-soft outline-none",
           "data-[state=open]:animate-in data-[state=open]:slide-in-from-right data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right",
           className,
         )}

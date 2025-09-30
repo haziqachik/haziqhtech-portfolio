@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
-import { Button as UiButton } from "@haziq/ui";
+import { Button as UiButton } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { DesktopNav, MobileNavLink, type NavLinkItem } from "@/components/site-nav";
@@ -68,7 +68,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background antialiased`}>
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col">
-            <header className="sticky top-0 z-40 border-b border-border/60 bg-background/70 backdrop-blur">
+            <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur">
               <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4">
                 <Link href="/" className="text-lg font-semibold tracking-tight">
                   Haziq Asyraaf
@@ -80,12 +80,7 @@ export default function RootLayout({
                   <ModeToggle />
                   <Sheet>
                     <SheetTrigger asChild>
-                      <UiButton
-                        as="button"
-                        type="button"
-                        variant="ghost"
-                        className="rounded-full px-3 py-2 md:hidden"
-                      >
+                      <UiButton variant="ghost" size="icon" className="md:hidden">
                         <span className="sr-only">Open navigation</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
