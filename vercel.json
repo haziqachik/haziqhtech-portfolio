@@ -1,8 +1,5 @@
-{
+﻿{
   "version": 2,
   "installCommand": "npm ci",
-  "buildCommand": "npm run build:mixed",
-  "builds": [
-    { "src": "apps/portfolio-mixed/package.json", "use": "@vercel/next" }
-  ]
+  "buildCommand": "npm run build:mixed"
 }
