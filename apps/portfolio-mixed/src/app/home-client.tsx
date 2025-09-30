@@ -50,14 +50,14 @@ export default function HomeClient({ profile, projects, timeline }: PageProps) {
             {profile.location}
           </Badge>
           <div className="space-y-4">
-            <div className="space-y-1 text-sm text-muted-foreground">
+            <div className="space-y-1 text-sm md:text-base md:text-muted-foreground">
               <p className="font-semibold text-foreground">{profile.name}</p>
-              <p>{profile.tagline}</p>
+              <p className="text-foreground md:text-muted-foreground">{profile.tagline}</p>
             </div>
             <h1 className="text-balance text-4xl font-bold tracking-tight md:text-6xl">
               Engineer resilient, security-first workflows
             </h1>
-            <p className="max-w-xl text-lg text-muted-foreground md:text-xl">
+            <p className="max-w-xl text-base leading-relaxed text-foreground md:text-xl md:text-muted-foreground">
               I help public-sector teams ship faster while protecting data: 160+ officers rely on the dashboards and automations I deploy. From Power BI governance to UiPath/FormSG orchestration, I turn manual bottlenecks into audited, secure workflows.
             </p>
           </div>
@@ -80,7 +80,7 @@ export default function HomeClient({ profile, projects, timeline }: PageProps) {
           <div className="flex flex-wrap justify-center gap-4 md:justify-start">
             {Object.entries(profile.socials ?? {}).map(([key, value]) =>
               value ? (
-                <Link key={key} href={value} className="transition hover:text-foreground" target="_blank">
+                <Link key={key} href={value} className="touch-manipulation transition hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" target="_blank">
                   {key.replace(/^[a-z]/, (char) => char.toUpperCase())}
                 </Link>
               ) : null,
