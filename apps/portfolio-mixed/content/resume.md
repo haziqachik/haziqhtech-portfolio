@@ -1,3 +1,7 @@
+﻿<!-- RESUME_PDF_START -->
+## Download my resume
+[Download PDF](/Haziq_Asyraaf_CV.pdf)
+<!-- RESUME_PDF_END -->
 # Haziq Asyraaf
 **Network Security Engineer** | Singapore  
 +65 9487 4556 | haziqh@hotmail.com | [linkedin.com/in/haziqasyraaf-sg](https://linkedin.com/in/haziqasyraaf-sg) | [github.com/haziqachik](https://github.com/haziqachik)
@@ -61,3 +65,4 @@ May 2016 - Dec 2016
 **Cloud & Platforms:** Azure fundamentals, Microsoft 365 security, Power BI Service governance, virtualisation (VMware, VirtualBox)  
 **Automation & Analytics:** UiPath RPA, FormSG administration, Power BI, Tableau, Excel analytics, survey data cleansing  
 **Programming & Tooling:** Python (automation), C#, Java, VB.NET, JavaScript, SQL, Git/GitHub, Postman, documentation, stakeholder communication
+
