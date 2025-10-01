@@ -33,39 +33,54 @@ const navLinks: NavLinkItem[] = [
   { href: "/contact", label: "Contact" },
 ];
 
-// Enhanced search data with keywords for each page
-const searchData = [
+// Real content search data - actual content from your files
+const contentSearchData = [
   { 
     href: "/", 
     label: "Home", 
-    keywords: ["home", "welcome", "introduction", "portfolio", "haziq", "asyraaf", "about", "overview", "landing"]
+    content: "haziq asyraaf portfolio network security engineer singapore data analyst automation"
   },
   { 
     href: "/projects", 
     label: "Projects", 
-    keywords: ["projects", "work", "portfolio", "development", "coding", "apps", "websites", "software", "github", "code"]
+    content: "ceh study hub network security cybersecurity formsg automation power bi dashboard uipath rpa certification lab network engineering labs cisco packet tracer vmware gns3"
   },
   { 
     href: "/timeline", 
     label: "Timeline", 
-    keywords: ["timeline", "career", "experience", "history", "journey", "education", "work experience", "background", "cv", "resume"]
+    content: "building construction authority bca executive data analyst power bi formsg uipath automation cpf central provident fund uat tester singapore police force radar operator officer coast guard coastal patrol squadron maritime surveillance"
   },
   { 
     href: "/blog", 
     label: "Blog", 
-    keywords: ["blog", "articles", "posts", "writing", "thoughts", "tutorials", "tech", "insights", "learning", "knowledge"]
+    content: "maritime safeguarding singapore police coast guard radar operator vessel movements tuas mega port automation security ccna ceh lab notes power bi preflight automation formsg survey"
   },
   { 
     href: "/resume", 
     label: "Resume", 
-    keywords: ["resume", "cv", "curriculum vitae", "experience", "skills", "education", "qualifications", "download", "pdf"]
+    content: "haziq asyraaf network security engineer ceh certified singapore police force radar operator coast guard maritime surveillance building construction authority bca data analyst power bi formsg uipath automation cpf central provident fund uat tester ccna az-500 labs"
   },
   { 
     href: "/contact", 
     label: "Contact", 
-    keywords: ["contact", "email", "reach out", "get in touch", "hire", "collaborate", "message", "communication"]
+    content: "contact email haziq haziqhtech collaboration hire network security data analyst singapore"
   },
 ];
+
+// Specific content excerpts for better search results
+const detailedContent = {
+  '/timeline': `building construction authority executive data analyst power bi formsg uipath automation 
+    cpf central provident fund uat tester singapore police force radar operator officer coast guard 
+    coastal patrol squadron maritime surveillance`,
+  '/blog': `maritime safeguarding singapore police coast guard 140000 vessel movements tuas mega port 
+    automation security radar operator surveillance singapore strait chokepoint economics evidence 
+    machine speed power bi dashboards ccna ceh lab notes preflight automation`,
+  '/resume': `singapore police force radar operator officer coast guard coastal patrol squadron maritime 
+    radar surveillance systems building construction authority data analyst power bi workspace 
+    permissions formsg survey workflows uipath automation cpf uat tester ccna az-500 labs`,
+  '/projects': `ceh study hub network security cybersecurity certification formsg survey automation 
+    power bi dashboard network engineering labs cisco packet tracer vmware gns3 uipath rpa`
+};
 
 // Icon mapping for navigation items - using Lucide icons to match your design
 const navIcons = {
@@ -138,13 +153,14 @@ export function HeaderNav() {
     };
   }, []);
 
-  // Enhanced search that includes keywords and page content
+  // Content-aware search that finds terms in actual page content
   const filteredNavLinks = searchQuery 
-    ? searchData.filter(item => {
+    ? contentSearchData.filter(item => {
         const query = searchQuery.toLowerCase();
         return (
           item.label.toLowerCase().includes(query) ||
-          item.keywords.some(keyword => keyword.toLowerCase().includes(query))
+          item.content.toLowerCase().includes(query) ||
+          (detailedContent[item.href as keyof typeof detailedContent]?.toLowerCase().includes(query))
         );
       }).map(item => navLinks.find(link => link.href === item.href)!).filter(Boolean)
     : navLinks;
@@ -241,10 +257,20 @@ export function HeaderNav() {
                 {/* Enhanced Navigation Links with Animations */}
                 <nav className="flex-1 px-6 py-2">
                   <div className="space-y-1">
+                    {searchQuery && (
+                      <div className="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+                        {filteredNavLinks.length > 0 
+                          ? `Found &quot;${searchQuery}&quot; in ${filteredNavLinks.length} page${filteredNavLinks.length !== 1 ? 's' : ''}`
+                          : `No content found for &quot;${searchQuery}&quot;`
+                        }
+                      </div>
+                    )}
                     <AnimatePresence>
                       {filteredNavLinks.map((item, index) => {
                         const IconComponent = navIcons[item.label as keyof typeof navIcons];
                         const isActive = pathname === item.href;
+                        const contentItem = contentSearchData.find(c => c.href === item.href);
+                        const matchesSearch = searchQuery && contentItem?.content.toLowerCase().includes(searchQuery.toLowerCase());
                         
                         return (
                           <motion.div
@@ -260,6 +286,8 @@ export function HeaderNav() {
                                 className={`group relative flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ${
                                   isActive
                                     ? "bg-blue-50 text-blue-600 shadow-sm dark:bg-blue-900/20 dark:text-blue-400"
+                                    : matchesSearch
+                                    ? "bg-yellow-50 text-gray-800 border border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-200 dark:border-yellow-700"
                                     : "text-gray-700 hover:bg-gray-50 hover:shadow-sm dark:text-gray-300 dark:hover:bg-slate-800"
                                 }`}
                               >
@@ -269,7 +297,14 @@ export function HeaderNav() {
                                 >
                                   <IconComponent className="h-5 w-5" />
                                 </motion.div>
-                                <span className="flex-1">{item.label}</span>
+                                <div className="flex-1 flex flex-col">
+                                  <span>{item.label}</span>
+                                  {matchesSearch && (
+                                    <span className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                                      Contains &quot;{searchQuery}&quot;
+                                    </span>
+                                  )}
+                                </div>
                                 {isActive && (
                                   <motion.span 
                                     className="text-xs font-medium text-blue-600 dark:text-blue-400"
