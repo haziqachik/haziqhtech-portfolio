@@ -33,6 +33,40 @@ const navLinks: NavLinkItem[] = [
   { href: "/contact", label: "Contact" },
 ];
 
+// Enhanced search data with keywords for each page
+const searchData = [
+  { 
+    href: "/", 
+    label: "Home", 
+    keywords: ["home", "welcome", "introduction", "portfolio", "haziq", "asyraaf", "about", "overview", "landing"]
+  },
+  { 
+    href: "/projects", 
+    label: "Projects", 
+    keywords: ["projects", "work", "portfolio", "development", "coding", "apps", "websites", "software", "github", "code"]
+  },
+  { 
+    href: "/timeline", 
+    label: "Timeline", 
+    keywords: ["timeline", "career", "experience", "history", "journey", "education", "work experience", "background", "cv", "resume"]
+  },
+  { 
+    href: "/blog", 
+    label: "Blog", 
+    keywords: ["blog", "articles", "posts", "writing", "thoughts", "tutorials", "tech", "insights", "learning", "knowledge"]
+  },
+  { 
+    href: "/resume", 
+    label: "Resume", 
+    keywords: ["resume", "cv", "curriculum vitae", "experience", "skills", "education", "qualifications", "download", "pdf"]
+  },
+  { 
+    href: "/contact", 
+    label: "Contact", 
+    keywords: ["contact", "email", "reach out", "get in touch", "hire", "collaborate", "message", "communication"]
+  },
+];
+
 // Icon mapping for navigation items - using Lucide icons to match your design
 const navIcons = {
   Home: Home,
@@ -104,10 +138,16 @@ export function HeaderNav() {
     };
   }, []);
 
-  // Filter nav links based on search
-  const filteredNavLinks = navLinks.filter(link => 
-    link.label.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Enhanced search that includes keywords and page content
+  const filteredNavLinks = searchQuery 
+    ? searchData.filter(item => {
+        const query = searchQuery.toLowerCase();
+        return (
+          item.label.toLowerCase().includes(query) ||
+          item.keywords.some(keyword => keyword.toLowerCase().includes(query))
+        );
+      }).map(item => navLinks.find(link => link.href === item.href)!).filter(Boolean)
+    : navLinks;
 
   return (
     <header
@@ -181,7 +221,7 @@ export function HeaderNav() {
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="Search pages..."
+                      placeholder="Search pages & content..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-full rounded-lg border border-gray-200 bg-gray-50 pl-10 pr-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-slate-600 dark:bg-slate-800 dark:text-gray-100"
@@ -260,14 +300,18 @@ export function HeaderNav() {
                 <div className="px-6 py-4 border-t border-gray-100 dark:border-slate-700">
                   <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Quick Actions</h4>
                   <div className="space-y-2">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-slate-800"
-                    >
-                      <Download className="h-4 w-4" />
-                      Download CV
-                    </motion.button>
+                    <SheetClose asChild>
+                      <motion.a
+                        href="/Haziq_Asyraaf_CV.pdf"
+                        download
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-slate-800"
+                      >
+                        <Download className="h-4 w-4" />
+                        Download CV
+                      </motion.a>
+                    </SheetClose>
                   </div>
                 </div>
 
@@ -276,19 +320,23 @@ export function HeaderNav() {
                   <h4 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Connect</h4>
                   <div className="flex gap-2">
                     {[
-                      { icon: Github, href: "#", label: "GitHub" },
-                      { icon: Linkedin, href: "#", label: "LinkedIn" },
-                      { icon: Mail, href: "/contact", label: "Email" }
+                      { icon: Github, href: "https://github.com/haziqhtech", label: "GitHub" },
+                      { icon: Linkedin, href: "https://linkedin.com/in/haziqasyraaf-sg", label: "LinkedIn" },
+                      { icon: Mail, href: "mailto:haziq@haziqhtech.sg", label: "Email" }
                     ].map((social) => (
-                      <motion.a
-                        key={social.label}
-                        href={social.href}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 dark:bg-slate-800 dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
-                      >
-                        <social.icon className="h-5 w-5" />
-                      </motion.a>
+                      <SheetClose asChild key={social.label}>
+                        <motion.a
+                          href={social.href}
+                          target={social.href.startsWith('http') ? '_blank' : undefined}
+                          rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                          className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-600 dark:bg-slate-800 dark:text-gray-400 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
+                          title={`Open ${social.label}`}
+                        >
+                          <social.icon className="h-5 w-5" />
+                        </motion.a>
+                      </SheetClose>
                     ))}
                   </div>
                 </div>
