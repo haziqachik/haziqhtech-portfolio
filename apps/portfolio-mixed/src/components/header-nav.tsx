@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button as UiButton } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -29,7 +30,20 @@ const navIcons = {
 
 export function HeaderNav() {
   const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
   // const profile = getProfile(); // Available for future use
+
+  // Auto-close side nav when resizing to desktop
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) { // md breakpoint
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <header
@@ -86,7 +100,7 @@ export function HeaderNav() {
                   <div className="space-y-1">
                     {navLinks.map((item) => {
                       const IconComponent = navIcons[item.label as keyof typeof navIcons];
-                      const isActive = item.label === "Home"; // You can make this dynamic later
+                      const isActive = pathname === item.href;
                       
                       return (
                         <SheetClose asChild key={item.href}>
