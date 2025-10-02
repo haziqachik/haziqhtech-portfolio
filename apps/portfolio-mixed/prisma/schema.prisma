@@ -1,0 +1,45 @@
+// Multi-Database Prisma Schema for Portfolio
+// SQLite: Blog Comments | Postgres: Analytics & Contact | MongoDB: Projects
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// SQLITE DATABASE - Blog Comments System
+// =============================================================================
+
+model BlogComment {
+  id          Int      @id @default(autoincrement())
+  postSlug    String   // Which blog post (e.g., "maritime-safeguarding-future")
+  authorName  String   // Commenter's name
+  authorEmail String?  // Email (optional, for notifications)
+  authorWebsite String? // Website (optional)
+  commentText String   // The actual comment
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ipAddress   String?  // For moderation
+  isApproved  Boolean  @default(false) // Comment moderation
+  parentId    Int?     // For reply threads
+  
+  // Self-referential relation for replies
+  parent   BlogComment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  BlogComment[] @relation("CommentReplies")
+  
+  @@map("blog_comments")
+}
+
+model BlogView {
+  id        Int      @id @default(autoincrement())
+  postSlug  String   // Which post was viewed
+  viewedAt  DateTime @default(now())
+  ipAddress String?
+  userAgent String?
+  
+  @@map("blog_views")
+}
