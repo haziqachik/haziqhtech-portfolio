@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog";
+import { CommentSection } from "@/components/comments";
+import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 
 type Params = { slug: string };
 
@@ -37,6 +39,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
 
   return (
       <article className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-4 md:px-0">
+        {/* Analytics Tracking */}
+        <PageViewTracker pageId={`blog-${post.slug}`} title={post.title} />
         <header className="relative overflow-hidden rounded-3xl border border-primary/25 bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.18),_transparent_65%)] p-10 shadow-lg shadow-primary/10 md:p-14">
           <div className="flex flex-col gap-5">
             <Badge variant="secondary" className="w-fit">{formattedDate}</Badge>
@@ -86,6 +90,14 @@ export default async function Page({ params }: { params: Promise<Params> }) {
             </aside>
           ) : null}
         </div>
+
+        {/* Comment Section */}
+        <section className="w-full">
+          <CommentSection 
+            postId={post.slug} 
+            title="Join the Discussion"
+          />
+        </section>
 
         <Card className="border-border/70 bg-card/90">
           <CardHeader>
