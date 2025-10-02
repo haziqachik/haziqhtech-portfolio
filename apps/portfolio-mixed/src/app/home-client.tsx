@@ -89,6 +89,68 @@ export default function HomeClient({ profile, projects, timeline }: PageProps) {
         </div>
       </motion.section>
 
+      {/* Built from Scratch Section */}
+      <motion.section
+        id="built-from-scratch"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={fadeIn}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        <Card className="border-green-200 bg-green-50">
+          <CardHeader className="text-center">
+            <Badge className="mx-auto w-fit bg-green-100 text-green-800">
+              💻 BUILT FROM SCRATCH
+            </Badge>
+            <CardTitle className="text-2xl text-green-800 md:text-3xl">
+              Full-Stack Development Showcase
+            </CardTitle>
+            <CardDescription className="text-green-700">
+              This entire portfolio system was designed and developed from the ground up - no templates, no purchased themes, pure custom development
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-800">0</div>
+                <div className="text-sm text-green-600">Templates Used</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-800">100%</div>
+                <div className="text-sm text-green-600">Custom Code</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-800">15+</div>
+                <div className="text-sm text-green-600">Technologies</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-800">3</div>
+                <div className="text-sm text-green-600">Databases</div>
+              </div>
+            </div>
+            <div className="text-center space-y-4">
+              <p className="text-green-700 max-w-3xl mx-auto">
+                <strong>Next.js 15</strong> with App Router • <strong>Multi-Database Architecture</strong> (SQLite + Postgres + MongoDB) • 
+                <strong>Real-time Comment System</strong> • <strong>Professional Admin Dashboard</strong> • 
+                <strong>TypeScript Throughout</strong> • <strong>Production-Ready Deployment</strong>
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Button asChild size="sm" className="bg-green-600 hover:bg-green-700">
+                  <Link href="/architecture">View Architecture</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="border-green-600 text-green-700 hover:bg-green-100">
+                  <Link href="/admin">Admin Dashboard</Link>
+                </Button>
+                <Button asChild size="sm" variant="outline" className="border-green-600 text-green-700 hover:bg-green-100">
+                  <Link href="/comments-test">Live Demo</Link>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.section>
+
       <motion.section
         id="how-i-can-help"
         initial="hidden"

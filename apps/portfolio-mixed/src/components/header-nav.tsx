@@ -26,6 +26,7 @@ import {
 
 const navLinks: NavLinkItem[] = [
   { href: "/", label: "Home" },
+  { href: "/architecture", label: "Architecture" },
   { href: "/projects", label: "Projects" },
   { href: "/timeline", label: "Timeline" },
   { href: "/blog", label: "Blog" },
@@ -38,7 +39,12 @@ const contentSearchData = [
   { 
     href: "/", 
     label: "Home", 
-    content: "haziq asyraaf portfolio network security engineer singapore data analyst automation"
+    content: "haziq asyraaf portfolio network security engineer singapore data analyst automation built from scratch full stack development"
+  },
+  { 
+    href: "/architecture", 
+    label: "Architecture", 
+    content: "full stack architecture system design database nextjs react typescript prisma sqlite postgres mongodb api rest multi database custom development from scratch"
   },
   { 
     href: "/projects", 
