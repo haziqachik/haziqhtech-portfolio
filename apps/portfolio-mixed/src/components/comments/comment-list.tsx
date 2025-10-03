@@ -30,7 +30,7 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
       setIsLoading(true)
       setError(null)
       
-      const response = await fetch(`/api/comments?postId=${encodeURIComponent(postId)}`)
+      const response = await fetch(`/api/comments?postSlug=${encodeURIComponent(postId)}`)
       
       if (!response.ok) {
         throw new Error(`Failed to load comments: ${response.statusText}`)

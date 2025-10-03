@@ -34,9 +34,9 @@ export function CommentForm({ postId, onCommentAdded }: CommentFormProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          postId,
-          author: author.trim(),
-          content: content.trim(),
+          postSlug: postId,
+          authorName: author.trim(),
+          commentText: content.trim(),
         }),
       })
 
