@@ -13,7 +13,7 @@ GitHub detected MongoDB Atlas Database URIs with credentials in:
 
 #### **1. Sanitized All Example Connection Strings** 🛡️
 ```diff
-- MONGODB_URI="mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/portfolio"
+- MONGODB_URI="mongodb+srv://[REDACTED_EXAMPLE]"
 + MONGODB_URI="mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE"
 ```
 
@@ -34,7 +34,7 @@ GitHub detected MongoDB Atlas Database URIs with credentials in:
 #### **1. Placeholder Format Changed:**
 ```bash
 # OLD (flagged as suspicious):
-mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/portfolio
+mongodb+srv://[REDACTED_EXAMPLE_FORMAT]
 
 # NEW (clearly a template):  
 mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE
