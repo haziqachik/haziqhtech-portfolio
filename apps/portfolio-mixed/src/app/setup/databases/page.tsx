@@ -162,7 +162,7 @@ export default function DatabaseSetupPage() {
                       Click "Connect" → "Connect your application" → Copy the connection string
                     </div>
                     <div className="mt-2 p-3 bg-muted rounded text-xs font-mono">
-                      MONGODB_URI="mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/portfolio?retryWrites=true&w=majority"
+                      MONGODB_URI="mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE"
                     </div>
                   </div>
                 </div>

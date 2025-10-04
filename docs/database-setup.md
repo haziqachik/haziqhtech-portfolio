@@ -12,10 +12,10 @@
 # 1. Sign up at https://cloud.mongodb.com/
 # 2. Create a free cluster (512MB free forever)
 # 3. Get connection string like:
-# mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/portfolio
+# mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE
 
 # Update .env.local:
-MONGODB_URI="mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/portfolio"
+MONGODB_URI="mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE"
 USE_MOCK_MONGODB=false
 ```
 

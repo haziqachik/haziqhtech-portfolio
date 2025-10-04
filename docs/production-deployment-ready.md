@@ -82,7 +82,7 @@ MONGODB_URI="mongodb+srv://..." # Use MongoDB Atlas
 # Sign up at MongoDB Atlas (free)
 # Get connection string
 # Add to production environment:
-MONGODB_URI="mongodb+srv://username:password@cluster0.mongodb.net/portfolio"
+MONGODB_URI="mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE"
 ```
 
 #### 2. EmailJS Setup (Optional)  
