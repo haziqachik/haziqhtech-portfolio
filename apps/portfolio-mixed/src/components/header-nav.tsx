@@ -110,11 +110,19 @@ export function HeaderNav() {
   const [open, setOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [isOnline, setIsOnline] = React.useState(true);
+  const [mounted, setMounted] = React.useState(false);
   const pathname = usePathname();
   // const profile = getProfile(); // Available for future use
 
+  // Ensure component is mounted on client side
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Auto-close side nav when resizing to desktop
   React.useEffect(() => {
+    if (!mounted) return;
+    
     const handleResize = () => {
       if (window.innerWidth >= 768) { // md breakpoint
         setOpen(false);
@@ -123,10 +131,12 @@ export function HeaderNav() {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [mounted]);
 
   // Keyboard navigation support
   React.useEffect(() => {
+    if (!mounted) return;
+    
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && open) {
         setOpen(false);
@@ -137,18 +147,25 @@ export function HeaderNav() {
       document.addEventListener('keydown', handleKeyDown);
       // Focus trap - prevent scrolling on body
       document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
     }
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [open]);
+  }, [open, mounted]);
 
   // Online/offline status
   React.useEffect(() => {
+    if (!mounted) return;
+    
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
+    
+    // Set initial online status
+    setIsOnline(navigator.onLine);
     
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
@@ -157,19 +174,26 @@ export function HeaderNav() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [mounted]);
 
   // Content-aware search that finds terms in actual page content
-  const filteredNavLinks = searchQuery 
-    ? contentSearchData.filter(item => {
+  const filteredNavLinks = React.useMemo(() => {
+    if (!searchQuery || !mounted) return navLinks;
+    
+    try {
+      return contentSearchData.filter(item => {
         const query = searchQuery.toLowerCase();
         return (
           item.label.toLowerCase().includes(query) ||
           item.content.toLowerCase().includes(query) ||
           (detailedContent[item.href as keyof typeof detailedContent]?.toLowerCase().includes(query))
         );
-      }).map(item => navLinks.find(link => link.href === item.href)!).filter(Boolean)
-    : navLinks;
+      }).map(item => navLinks.find(link => link.href === item.href)!).filter(Boolean);
+    } catch (error) {
+      console.warn('Search filtering error:', error);
+      return navLinks;
+    }
+  }, [searchQuery, mounted]);
 
   return (
     <header
@@ -192,9 +216,14 @@ export function HeaderNav() {
             <ModeToggle />
           </div>
 
-          <Sheet open={open} onOpenChange={setOpen}>
+          <Sheet open={mounted ? open : false} onOpenChange={mounted ? setOpen : () => {}}>
             <SheetTrigger asChild>
-              <UiButton variant="outline" size="icon" className="md:hidden">
+              <UiButton 
+                variant="outline" 
+                size="icon" 
+                className="md:hidden"
+                onClick={() => mounted && setOpen(true)}
+              >
                 <span className="sr-only">Open navigation menu</span>
                 <Menu className="h-5 w-5" />
               </UiButton>
