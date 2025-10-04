@@ -185,7 +185,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
                         className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-48 w-full items-center justify-center bg-[radial-gradient(circle_at_top,_theme(colors.primary/25),_transparent_60%)] text-sm font-medium text-primary">
+                      <div className="flex h-48 w-full items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.25),_transparent_60%)] text-sm font-medium text-primary">
                         {project.title}
                       </div>
                     )}

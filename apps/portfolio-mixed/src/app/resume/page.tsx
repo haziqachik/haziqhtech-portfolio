@@ -51,7 +51,7 @@ export default async function ResumePage() {
           <p className="text-base text-muted-foreground md:text-lg">{profile.tagline}</p>
           <p className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">Updated {resumeUpdated}</p>
         </div>
-        <div className="overflow-hidden rounded-3xl border border-primary/20 bg-[radial-gradient(circle_at_top,_theme(colors.primary/25),_transparent_55%)] p-6 shadow-soft-sm md:p-10">
+        <div className="overflow-hidden rounded-3xl border border-primary/20 bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.25),_transparent_55%)] p-6 shadow-soft-sm md:p-10">
           <div className="flex flex-col items-center justify-between gap-4 text-center md:flex-row md:text-left">
             <div className="space-y-1">
               <p className="text-sm font-medium text-primary/90 md:text-base">Download the full resume</p>

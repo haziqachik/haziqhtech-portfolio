@@ -43,3 +43,28 @@ model BlogView {
   
   @@map("blog_views")
 }
+
+// Basic Analytics using SQLite (fallback when Postgres isn't available)
+model PageView {
+  id        Int      @id @default(autoincrement())
+  path      String   // Page path (e.g., "/", "/about", "/projects")
+  viewedAt  DateTime @default(now())
+  ipAddress String?
+  userAgent String?
+  referrer  String?
+  
+  @@map("page_views")
+}
+
+model ContactForm {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  createdAt DateTime @default(now())
+  ipAddress String?
+  status    String   @default("unread") // unread, read, replied
+  
+  @@map("contact_forms")
+}

@@ -1,4 +1,4 @@
-// API route for analytics (Vercel Postgres)
+// API route for analytics (SQLite/Postgres hybrid)
 import { NextRequest, NextResponse } from 'next/server';
 import { analytics } from '@/lib/database';
 
@@ -13,10 +13,22 @@ export async function GET(request: NextRequest) {
         const limit = parseInt(searchParams.get('limit') || '10');
         const popularPages = await analytics.getPopularPages(limit);
         return NextResponse.json({ popularPages });
+      
+      case 'stats':
+        const [totalViews, uniqueVisitors] = await Promise.all([
+          analytics.getTotalViews(),
+          analytics.getUniqueVisitors()
+        ]);
+        return NextResponse.json({ 
+          totalViews,
+          uniqueVisitors,
+          avgSessionDuration: '2m 34s', // Mock data
+          bounceRate: '45%' // Mock data
+        });
 
       default:
         return NextResponse.json({ 
-          error: 'Invalid analytics type. Use: popular-pages' 
+          error: 'Invalid analytics type. Use: popular-pages, stats' 
         }, { status: 400 });
     }
   } catch (error) {
@@ -35,6 +47,14 @@ export async function POST(request: NextRequest) {
     const { event, path } = body;
 
     if (event === 'page_view' && path) {
+      // Check if Postgres is configured
+      if (!process.env.POSTGRES_URL) {
+        return NextResponse.json({ 
+          success: false,
+          message: 'Analytics recording disabled - Postgres not configured',
+        });
+      }
+
       const userAgent = request.headers.get('user-agent') || undefined;
       const ip = request.headers.get('x-forwarded-for') || 
                  request.headers.get('x-real-ip') || 

@@ -1,4 +1,4 @@
-// API route for projects (MongoDB)
+// API route for projects (MongoDB/Mock)
 import { NextRequest, NextResponse } from 'next/server';
 import { projects } from '@/lib/database';
 
@@ -12,11 +12,15 @@ export async function GET(request: NextRequest) {
       case 'featured':
         const featuredProjects = await projects.getFeatured();
         return NextResponse.json({ projects: featuredProjects });
+      
+      case 'all':
+        const allProjects = await projects.getAll();
+        return NextResponse.json({ projects: allProjects });
 
       default:
-        return NextResponse.json({ 
-          error: 'Invalid project type. Use: featured' 
-        }, { status: 400 });
+        // Default to all projects
+        const defaultProjects = await projects.getAll();
+        return NextResponse.json({ projects: defaultProjects });
     }
   } catch (error) {
     console.error('Projects API error:', error);
@@ -27,11 +31,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/projects - Update project data
+// POST /api/projects - Create or update project data
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { action, slug } = body;
+    const { action, slug, title, description, technologies, status, year, featured, githubUrl, liveUrl } = body;
 
     if (action === 'increment_views' && slug) {
       const result = await projects.incrementViews(slug);
@@ -40,6 +44,31 @@ export async function POST(request: NextRequest) {
         success: true,
         message: 'Project view count updated',
         project: result 
+      });
+    }
+
+    if (action === 'create') {
+      if (!title || !description || !technologies || !status || !year) {
+        return NextResponse.json(
+          { error: 'title, description, technologies, status, and year are required' },
+          { status: 400 }
+        );
+      }
+
+      const project = await projects.create({
+        title,
+        description,
+        technologies,
+        status,
+        year,
+        featured: featured || false,
+        githubUrl,
+        liveUrl
+      });
+
+      return NextResponse.json({ 
+        project,
+        message: 'Project created successfully!' 
       });
     }
 

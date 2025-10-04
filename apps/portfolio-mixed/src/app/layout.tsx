@@ -23,10 +23,6 @@ export const metadata: Metadata = {
   title: "Haziq Asyraaf | Portfolio",
   description: "IT Professional | Data Analyst | Cybersecurity Enthusiast",
   metadataBase: new URL(baseUrl),
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-  ],
   openGraph: {
     title: "Haziq Asyraaf | Portfolio",
     description: "IT Professional | Data Analyst | Cybersecurity Enthusiast",
@@ -40,6 +36,13 @@ export const metadata: Metadata = {
     description: "IT Professional | Data Analyst | Cybersecurity Enthusiast",
     images: ["/api/og"],
   },
+};
+
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
 
 // Navigation links are now defined inside HeaderNav

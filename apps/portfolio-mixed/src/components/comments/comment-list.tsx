@@ -1,16 +1,16 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MessageCircle, RefreshCw, Calendar } from "lucide-react"
 
 interface Comment {
   id: string
-  author: string
-  content: string
+  authorName: string
+  commentText: string
   createdAt: string
-  postId: string
+  postSlug: string
   parentId?: string
   isApproved: boolean
 }
@@ -25,7 +25,7 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const loadComments = async () => {
+  const loadComments = useCallback(async () => {
     try {
       setIsLoading(true)
       setError(null)
@@ -44,11 +44,11 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [postId])
 
   useEffect(() => {
     loadComments()
-  }, [postId, refreshTrigger])
+  }, [loadComments, refreshTrigger])
 
   const formatDate = (dateString: string) => {
     try {
@@ -94,35 +94,33 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
     )
   }
 
-  const approvedComments = comments.filter(comment => comment.isApproved)
-
   return (
     <Card className="w-full max-w-2xl">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <MessageCircle className="h-5 w-5" />
-          Comments ({approvedComments.length})
+          Comments ({comments.length})
           <Button onClick={loadComments} variant="ghost" size="sm" className="ml-auto">
             <RefreshCw className="h-4 w-4" />
           </Button>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {approvedComments.length === 0 ? (
+        {comments.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>No comments yet. Be the first to share your thoughts!</p>
           </div>
         ) : (
           <div className="space-y-4">
-            {approvedComments.map((comment) => (
+            {comments.map((comment) => (
               <div 
                 key={comment.id} 
                 className="border-l-2 border-primary/20 pl-4 py-3 bg-muted/30 rounded-r-lg"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <span className="font-semibold text-primary">
-                    {comment.author}
+                    {comment.authorName}
                   </span>
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Calendar className="h-3 w-3" />
@@ -130,7 +128,7 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
                   </div>
                 </div>
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                  {comment.content}
+                  {comment.commentText}
                 </p>
               </div>
             ))}

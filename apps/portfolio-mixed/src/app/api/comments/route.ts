@@ -48,12 +48,12 @@ export async function POST(request: NextRequest) {
       commentText,
       parentId: parentId ? parseInt(parentId) : null,
       ipAddress: ip,
-      isApproved: false // Requires moderation
+      isApproved: true // Auto-approve for demo (set to false for production)
     });
 
     return NextResponse.json({ 
       comment,
-      message: 'Comment submitted successfully. It will be visible after moderation.' 
+      message: 'Comment added successfully!' 
     });
   } catch (error) {
     console.error('Failed to create comment:', error);

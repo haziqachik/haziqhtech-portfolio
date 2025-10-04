@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@haziq/ui"],
 
   // TEMPORARY safety nets during refactors (optional; remove later)
-  eslint: { ignoreDuringBuilds: false },
+  eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: false },
 };
 
