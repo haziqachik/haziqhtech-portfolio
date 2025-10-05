@@ -87,5 +87,19 @@
     "repo": "https://github.com/haziqachik/haziqhtech-portfolio/blob/main/apps/portfolio-mixed/content/blog/maritime-safeguarding-future.mdx",
     "year": 2024,
     "image": "/images/projects/ceh-study-hub.svg"
+  },
+  {
+    "title": "Full-Stack Portfolio Case Study",
+    "description": "Comprehensive technical case study documenting the architecture, implementation, and lessons learned from building this portfolio.",
+    "tech": [
+      "System Architecture",
+      "Technical Writing",
+      "DevOps Practices",
+      "Performance Optimization"
+    ],
+    "href": "https://haziqhtech.sg/case-study",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/blob/main/apps/portfolio-mixed/src/app/case-study/page.tsx",
+    "year": 2025,
+    "image": "/images/projects/ceh-study-hub.svg"
   }
 ]

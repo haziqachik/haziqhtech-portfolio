@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "haziqhtech-portfolio",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "file:./portfolio.db",
+    "MONGODB_URI": "mongodb+srv://AdminhzDBweb:33HzS9823465i+1998@hzwebportfoliocluster.imubfze.mongodb.net/haziq-portfolio",
+    "USE_MOCK_MONGODB": "false",
+    "NEXTAUTH_SECRET": "haziq-portfolio-production-2025-secure-key-auto-deploy"
+  },
+  "regions": ["sin1"],
+  "functions": {
+    "apps/portfolio-mixed/src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
+}
