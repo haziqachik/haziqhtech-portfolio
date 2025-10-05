@@ -1,0 +1,77 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="maritimeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0EA5E9;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="waves" x="0" y="0" width="60" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 10 Q15 5 30 10 T60 10" stroke="white" stroke-width="1" fill="none" opacity="0.2"/>
+    </pattern>
+  </defs>
+  
+  <!-- Ocean Background -->
+  <rect width="800" height="400" fill="url(#maritimeGrad)"/>
+  <rect width="800" height="400" fill="url(#waves)"/>
+  
+  <!-- Maritime Surveillance Illustration -->
+  <g transform="translate(50, 50)">
+    <!-- Radar Tower -->
+    <rect x="100" y="200" width="20" height="100" fill="white" opacity="0.9"/>
+    <circle cx="110" cy="190" r="25" fill="white" opacity="0.9"/>
+    <circle cx="110" cy="190" r="20" fill="#0EA5E9"/>
+    
+    <!-- Radar Sweep -->
+    <path d="M110 190 L160 140" stroke="#10B981" stroke-width="3" opacity="0.8"/>
+    <path d="M110 190 A50 50 0 0 1 160 140" stroke="#10B981" stroke-width="2" fill="none" opacity="0.6"/>
+    <circle cx="110" cy="190" r="80" stroke="#10B981" stroke-width="1" fill="none" opacity="0.3"/>
+    <circle cx="110" cy="190" r="120" stroke="#10B981" stroke-width="1" fill="none" opacity="0.2"/>
+    
+    <!-- Ships -->
+    <g transform="translate(300, 250)">
+      <!-- Large vessel -->
+      <rect x="0" y="10" width="80" height="20" rx="10" fill="white" opacity="0.9"/>
+      <rect x="10" y="0" width="15" height="30" fill="white" opacity="0.9"/>
+      <!-- Containers -->
+      <rect x="20" y="5" width="8" height="8" fill="#EF4444" opacity="0.8"/>
+      <rect x="30" y="5" width="8" height="8" fill="#10B981" opacity="0.8"/>
+      <rect x="40" y="5" width="8" height="8" fill="#F59E0B" opacity="0.8"/>
+    </g>
+    
+    <g transform="translate(500, 200)">
+      <!-- Medium vessel -->
+      <rect x="0" y="8" width="50" height="15" rx="7" fill="white" opacity="0.8"/>
+      <rect x="10" y="0" width="10" height="20" fill="white" opacity="0.8"/>
+    </g>
+    
+    <g transform="translate(450, 280)">
+      <!-- Small vessel -->
+      <rect x="0" y="5" width="30" height="10" rx="5" fill="white" opacity="0.7"/>
+    </g>
+    
+    <!-- Singapore Strait -->
+    <path d="M50 320 Q200 300 400 310 T700 300" stroke="white" stroke-width="3" opacity="0.6"/>
+    <text x="400" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" opacity="0.8">
+      Singapore Strait - 140,000+ Vessel Movements
+    </text>
+    
+    <!-- Surveillance Coverage Area -->
+    <ellipse cx="400" cy="200" rx="300" ry="150" stroke="#10B981" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="10,5"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">
+    Maritime Surveillance & Security Analysis
+  </text>
+  
+  <!-- Stats -->
+  <text x="150" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" opacity="0.9">
+    Singapore Police Force
+  </text>
+  <text x="400" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" opacity="0.9">
+    Coastal Patrol Squadron
+  </text>
+  <text x="650" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="white" opacity="0.9">
+    Radar Operations
+  </text>
+</svg>

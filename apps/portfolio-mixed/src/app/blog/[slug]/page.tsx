@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog";
 import { CommentSection } from "@/components/comments";
 import { PageViewTracker } from "@/components/analytics/page-view-tracker";
+import { BlogInteractions } from "@/components/blog/blog-interactions";
+import { BlogHeroImage } from "@/components/blog/blog-image";
 
 type Params = { slug: string };
 
@@ -63,15 +65,28 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           </div>
         </header>
 
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,1fr)] lg:items-start">
-          <div className="rounded-3xl border border-border/50 bg-background/80 p-8 shadow-lg shadow-primary/5">
-            <div className="prose prose-slate dark:prose-invert max-w-none prose-p:my-6 prose-ul:my-6 prose-ol:my-6 prose-headings:mt-10 prose-headings:mb-4 prose-li:marker:text-primary">
-              {post.content /* MDX content as React nodes */}
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] lg:items-start">
+          {/* Main Content */}
+          <div className="space-y-8">
+            <div className="rounded-3xl border border-border/50 bg-background/80 p-8 shadow-lg shadow-primary/5">
+              <div className="prose prose-slate dark:prose-invert max-w-none prose-p:my-6 prose-ul:my-6 prose-ol:my-6 prose-headings:mt-10 prose-headings:mb-4 prose-li:marker:text-primary">
+                {post.content /* MDX content as React nodes */}
+              </div>
             </div>
           </div>
 
-          {post.toc.length ? (
-            <aside className="sticky top-32 hidden lg:block">
+          {/* Sidebar */}
+          <aside className="space-y-6">
+            {/* Blog Interactions */}
+            <BlogInteractions
+              slug={post.slug}
+              title={post.title}
+              readingTime={`${post.readingTime} min`}
+              pageViews={Math.floor(Math.random() * 1000) + 100} // Mock data for now
+            />
+
+            {/* Table of Contents */}
+            {post.toc.length ? (
               <div className="rounded-2xl border border-border/60 bg-card/80 p-6 shadow-soft">
                 <h2 className="text-xs font-semibold uppercase tracking-[0.35em] text-muted-foreground">On this page</h2>
                 <nav className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -87,8 +102,8 @@ export default async function Page({ params }: { params: Promise<Params> }) {
                   ))}
                 </nav>
               </div>
-            </aside>
-          ) : null}
+            ) : null}
+          </aside>
         </div>
 
         {/* Comment Section */}

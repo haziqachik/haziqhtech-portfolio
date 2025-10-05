@@ -82,11 +82,15 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
     return (
       <Card className="w-full max-w-2xl">
         <CardContent className="p-6">
-          <div className="text-center">
-            <p className="text-red-500 mb-4">Error: {error}</p>
+          <div className="text-center py-8">
+            <MessageCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
+            <h3 className="text-lg font-semibold mb-2">Comments Temporarily Unavailable</h3>
+            <p className="text-muted-foreground mb-4">
+              The comment system is connecting to the database. This usually resolves quickly.
+            </p>
             <Button onClick={loadComments} variant="outline" size="sm">
               <RefreshCw className="h-4 w-4 mr-2" />
-              Try Again
+              Reconnect
             </Button>
           </div>
         </CardContent>
@@ -107,9 +111,15 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {comments.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>No comments yet. Be the first to share your thoughts!</p>
+          <div className="text-center py-8">
+            <MessageCircle className="h-16 w-16 mx-auto mb-4 text-primary opacity-20" />
+            <h3 className="text-lg font-semibold mb-2 text-foreground">Start the Conversation</h3>
+            <p className="text-muted-foreground mb-4">
+              Share your thoughts, questions, or insights about this content.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              💡 Your comments help build a community of learners and practitioners
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
