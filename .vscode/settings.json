@@ -1,3 +1,18 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "github.copilot.chat.executeImmediately": true,
+    "github.copilot.chat.iterateAutomatically": true,
+    "github.copilot.chat.backgroundExecution": true,
+    "github.copilot.chat.autoIterate": true,
+    "github.copilot.chat.continuousExecution": true,
+    "workbench.editor.autoSave": "afterDelay",
+    "workbench.editor.autoSaveDelay": 1000,
+    "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.tabs.enabled": true,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 8,
+    "workbench.editor.closeOnFileDelete": true,
+    "editor.formatOnSave": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000
 }

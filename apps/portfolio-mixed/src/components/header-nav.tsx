@@ -117,10 +117,6 @@ export function HeaderNav() {
   // Ensure component is mounted on client side
   React.useEffect(() => {
     setMounted(true);
-    // Set initial online status
-    if (typeof window !== 'undefined' && navigator) {
-      setIsOnline(navigator.onLine);
-    }
   }, []);
 
   // Auto-close side nav when resizing to desktop
@@ -128,7 +124,7 @@ export function HeaderNav() {
     if (!mounted) return;
     
     const handleResize = () => {
-      if (typeof window !== 'undefined' && window.innerWidth >= 768) { // md breakpoint
+      if (window.innerWidth >= 768) { // md breakpoint
         setOpen(false);
       }
     };
@@ -147,16 +143,29 @@ export function HeaderNav() {
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    if (open) {
+      document.addEventListener('keydown', handleKeyDown);
+      // Focus trap - prevent scrolling on body
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
   }, [open, mounted]);
 
   // Online/offline status
   React.useEffect(() => {
-    if (!mounted || typeof window === 'undefined') return;
+    if (!mounted) return;
     
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
+    
+    // Set initial online status
+    setIsOnline(navigator.onLine);
     
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
@@ -188,7 +197,10 @@ export function HeaderNav() {
 
   return (
     <header
-      className="sticky top-0 z-30 border-b border-border/60 bg-background/70 md:backdrop-blur transition-opacity duration-200"
+      className={[
+        "sticky top-0 z-30 border-b border-border/60 bg-background/70 md:backdrop-blur transition-opacity duration-200",
+        open ? "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto" : "opacity-100",
+      ].join(" ")}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4">
         <Link href="/" className="text-lg font-semibold tracking-tight">
@@ -204,12 +216,13 @@ export function HeaderNav() {
             <ModeToggle />
           </div>
 
-          <Sheet open={open} onOpenChange={setOpen}>
+          <Sheet open={mounted ? open : false} onOpenChange={mounted ? setOpen : () => {}}>
             <SheetTrigger asChild>
               <UiButton 
                 variant="outline" 
                 size="icon" 
                 className="md:hidden"
+                onClick={() => mounted && setOpen(true)}
               >
                 <span className="sr-only">Open navigation menu</span>
                 <Menu className="h-5 w-5" />
