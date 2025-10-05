@@ -56,15 +56,18 @@ function Monitor-Development {
         Start-AutonomousVSCode
     }
     
-    # Check git status and auto-commit if needed
+    # Check git status and auto-commit if needed (NO PROMPTS)
     $gitStatus = git status --porcelain 2>$null
     if ($gitStatus) {
         Write-AutoLog "📝 Found uncommitted changes - auto-committing..."
-        git add . 2>$null
-        $commitMsg = "Auto-commit: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
-        git commit -m $commitMsg 2>$null
-        git push origin main 2>$null
-        Write-AutoLog "✅ Auto-commit completed" "SUCCESS"
+        
+        # Use autonomous git commands (no prompts)
+        git auto-add 2>$null
+        $commitMsg = "Autonomous: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+        git auto-commit $commitMsg 2>$null
+        git auto-push 2>$null
+        
+        Write-AutoLog "✅ Autonomous git operations completed" "SUCCESS"
     }
     
     # Check deployment status
