@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 // site-nav types no longer used here; navigation handled in HeaderNav
-import HeaderNav from "@/components/header-nav";
+import HeaderNav from "@/components/header-nav-fixed";
 import { getProfile } from "@/lib/content";
 import "./globals.css";
 

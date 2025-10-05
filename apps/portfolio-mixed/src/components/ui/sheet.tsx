@@ -28,18 +28,17 @@ SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Content>, React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>>(
   ({ className, children, ...props }, ref) => (
     <SheetPortal>
+      <SheetOverlay />
       <SheetPrimitive.Content
         ref={ref}
         className={cn(
-          "fixed inset-y-0 right-0 z-60 w-full max-w-sm border-l border-border bg-background p-6 outline-none",
+          "fixed inset-y-0 right-0 z-50 w-full max-w-sm border-l border-border bg-background p-6 outline-none transition-transform duration-300 ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
           className,
         )}
         {...props}
       >
-        {/* Prevent background scroll when open */}
-        <style>{`body { overflow: hidden; }`}</style>
         {children}
-        <SheetPrimitive.Close className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground transition hover:text-foreground">
+        <SheetPrimitive.Close className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground transition hover:text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2">
           <X className="h-5 w-5" />
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>
