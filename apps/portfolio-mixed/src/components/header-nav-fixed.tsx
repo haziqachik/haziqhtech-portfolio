@@ -360,7 +360,7 @@ export function HeaderNav() {
                   {/* Social Links */}
                   <div className="mt-4 flex justify-center gap-3">
                     {[
-                      { icon: Github, href: "https://github.com/haziqhtech", label: "GitHub" },
+                      { icon: Github, href: "https://github.com/haziqachik", label: "GitHub" },
                       { icon: Linkedin, href: "https://linkedin.com/in/haziqasyraaf-sg", label: "LinkedIn" },
                       { icon: Mail, href: "mailto:haziq@haziqhtech.sg", label: "Email" }
                     ].map((social) => (

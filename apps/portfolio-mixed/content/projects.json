@@ -1,88 +1,91 @@
 [
   {
     "title": "Portfolio Experience Platform",
-    "description": "Monorepo powering haziqhtech.sg with dynamic content, dual apps, and shared UI primitives.",
+    "description": "Monorepo powering haziqhtech.sg with dynamic content, multi-database architecture, and modern full-stack features.",
     "tech": [
-      "Next.js",
+      "Next.js 15",
       "TypeScript",
       "Tailwind CSS",
       "Framer Motion",
-      "EmailJS",
-      "Contentlayer"
+      "MongoDB Atlas",
+      "PostgreSQL",
+      "SQLite"
     ],
-    "href": "https://haziqhtech.sg",
-    "repo": "https://github.com/haziqhtech/portfolio",
+    "href": "https://haziqhtech.sg/architecture",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio",
     "year": 2025,
     "image": "/images/projects/portfolio-experience-platform.svg"
   },
   {
-    "title": "Workforce Security Dashboards",
-    "description": "Power BI platform enforcing row-level security and MFA while delivering workforce intelligence for CRS-regulated firms.",
+    "title": "Multi-Database Architecture Showcase",
+    "description": "Full-stack system demonstrating SQLite for comments, MongoDB for projects, and PostgreSQL for analytics with health monitoring.",
     "tech": [
-      "Power BI",
-      "Power Query",
-      "DAX",
-      "Azure AD"
+      "Prisma ORM",
+      "MongoDB Atlas",
+      "Vercel Postgres",
+      "Next.js API Routes",
+      "TypeScript"
     ],
-    "href": "https://haziqhtech.sg/projects/workforce-security-dashboards",
-    "repo": "https://github.com/haziqhtech/power-bi-governance",
+    "href": "https://haziqhtech.sg/admin",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/tree/main/apps/portfolio-mixed/src/lib",
     "year": 2025,
     "image": "/images/projects/workforce-security-dashboards.svg"
   },
   {
-    "title": "FormSG Survey Automation",
-    "description": "Least-privilege FormSG workflows with Postman-triggered dispatch and UiPath QA helpers that cut survey turnaround time.",
+    "title": "Interactive Blog with Comments System",
+    "description": "MDX-powered blog with real-time comment system, search functionality, and content management dashboard.",
     "tech": [
-      "FormSG",
-      "Postman",
-      "UiPath",
-      "PowerShell"
+      "MDX",
+      "Next.js",
+      "SQLite",
+      "Tailwind CSS",
+      "Framer Motion"
     ],
-    "href": "https://haziqhtech.sg/projects/formsg-automation",
-    "repo": "https://github.com/haziqhtech/formsg-automation-playbook",
-    "year": 2024,
+    "href": "https://haziqhtech.sg/blog",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/tree/main/apps/portfolio-mixed/src/app/blog",
+    "year": 2025,
     "image": "/images/projects/formsg-survey-automation.svg"
   },
   {
-    "title": "Operations RPA Platform",
-    "description": "Self-hosted UiPath bots aggregating e-commerce telemetry, exporting analytics, and emailing stakeholders through a custom UI.",
+    "title": "Professional Timeline & Experience",
+    "description": "Interactive timeline showcasing career progression from Maritime Surveillance to Network Security Engineering.",
     "tech": [
-      "UiPath",
-      "SQL",
-      "WinForms",
-      "Excel"
+      "React",
+      "Framer Motion",
+      "Responsive Design",
+      "Modern UI/UX"
     ],
-    "href": "https://haziqhtech.sg/projects/operations-rpa-platform",
-    "repo": "https://github.com/haziqhtech/operations-rpa",
-    "year": 2023,
+    "href": "https://haziqhtech.sg/timeline",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/tree/main/apps/portfolio-mixed/content",
+    "year": 2025,
     "image": "/images/projects/operations-rpa-platform.svg"
   },
   {
-    "title": "Network Engineering Lab Series",
-    "description": "Documented Packet Tracer and GNS3 labs covering OSPF, ACL hardening, and automated validation with Python + Netmiko.",
+    "title": "Network Engineering Lab Documentation",
+    "description": "Comprehensive documentation of CCNA and network security labs with practical implementation guides.",
     "tech": [
       "Cisco Packet Tracer",
-      "GNS3",
-      "Python",
-      "Netmiko"
+      "Network Security",
+      "Documentation",
+      "Best Practices"
     ],
-    "href": "https://haziqhtech.sg/projects/network-labs",
-    "repo": "https://github.com/haziqhtech/network-labs",
-    "year": 2022,
+    "href": "https://haziqhtech.sg/blog/ccna-ceh-lab-notes",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/blob/main/apps/portfolio-mixed/content/blog/ccna-ceh-lab-notes.mdx",
+    "year": 2024,
     "image": "/images/projects/network-engineering-labs.svg"
   },
   {
-    "title": "CEH Study Hub",
-    "description": "Responsive CEH knowledge base with reconnaissance-to-persistence write-ups, live demos, and interviewer-ready bookmarks.",
+    "title": "Maritime Surveillance Analysis",
+    "description": "Analysis of Singapore's maritime security operations, covering 140,000+ vessel movements and radar surveillance systems.",
     "tech": [
-      "HTML",
-      "CSS",
-      "JavaScript",
-      "GitHub Pages"
+      "Data Analysis",
+      "Maritime Security",
+      "Operational Intelligence",
+      "Singapore Police Force"
     ],
-    "href": "https://haziqhtech.sg/projects/ceh-study-hub",
-    "repo": "https://github.com/haziqhtech/ceh-pages",
-    "year": 2021,
+    "href": "https://haziqhtech.sg/blog/maritime-safeguarding-future",
+    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/blob/main/apps/portfolio-mixed/content/blog/maritime-safeguarding-future.mdx",
+    "year": 2024,
     "image": "/images/projects/ceh-study-hub.svg"
   }
 ]
