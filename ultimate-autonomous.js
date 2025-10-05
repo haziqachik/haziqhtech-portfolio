@@ -536,6 +536,15 @@ class UltimateAutonomousAssistant {
                 case 'check-updates':
                     success = await this.checkUpdates(task.options);
                     break;
+                case 'github-security':
+                    success = await this.runGitHubAutomation(task.options);
+                    break;
+                case 'wiki-update':
+                    success = await this.updateWiki(task.options);
+                    break;
+                case 'security-audit':
+                    success = await this.performSecurityAudit(task.options);
+                    break;
                 default:
                     await this.log(`❓ Unknown task: ${task.type}`, 'WARN');
                     return;
