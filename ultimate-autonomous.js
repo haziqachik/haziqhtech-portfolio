@@ -502,14 +502,45 @@ class UltimateAutonomousAssistant {
                 this.addTask('commit-changes', { priority: 'normal' });
             }
             
-            // Check for updates every hour
             const now = new Date();
-            if (now.getMinutes() === 0 && now.getSeconds() < 20) {
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const dayOfWeek = now.getDay();
+            
+            // Check for updates every hour
+            if (minute === 0 && now.getSeconds() < 20) {
                 this.addTask('check-updates', { priority: 'low' });
+            }
+            
+            // Run GitHub security setup on first run or weekly Sunday at 8 AM
+            if ((dayOfWeek === 0 && hour === 8 && minute < 5) || 
+                (!await this.hasRunGitHubSetup())) {
+                this.addTask('github-security', { priority: 'high' });
+            }
+            
+            // Wiki updates weekly on Sunday at 9 AM
+            if (dayOfWeek === 0 && hour === 9 && minute < 5) {
+                this.addTask('wiki-update', { priority: 'normal' });
+            }
+            
+            // Security audit daily at midnight
+            if (hour === 0 && minute < 5) {
+                this.addTask('security-audit', { priority: 'normal' });
             }
             
         } catch (err) {
             // Ignore maintenance errors
+        }
+    }
+
+    async hasRunGitHubSetup() {
+        try {
+            // Check if security policy exists as indicator
+            const securityPath = path.join(this.projectRoot, 'SECURITY.md');
+            await fs.access(securityPath);
+            return true;
+        } catch {
+            return false;
         }
     }
 
@@ -715,6 +746,122 @@ Auto-committed: ${new Date().toISOString()}`;
             return true;
         } catch (err) {
             await this.log(`Update check failed: ${err.message}`, 'WARN');
+            return false;
+        }
+    }
+
+    async runGitHubAutomation(options = {}) {
+        try {
+            await this.log('🔒 Running GitHub security automation...', 'INFO');
+            
+            // Import and run GitHub automation
+            const GitHubRepoAutomation = require('./github-automation.js');
+            const success = await GitHubRepoAutomation.automate();
+            
+            if (success) {
+                await this.log('✅ GitHub security features configured', 'SUCCESS');
+            } else {
+                throw new Error('GitHub automation failed');
+            }
+            
+            return true;
+        } catch (err) {
+            await this.log(`GitHub automation failed: ${err.message}`, 'ERROR');
+            return false;
+        }
+    }
+
+    async updateWiki(options = {}) {
+        try {
+            await this.log('📖 Updating repository Wiki...', 'INFO');
+            
+            // Check if Wiki needs updates (weekly)
+            const now = new Date();
+            const dayOfWeek = now.getDay();
+            const hour = now.getHours();
+            
+            // Run wiki updates weekly on Sunday at 9 AM
+            if (dayOfWeek === 0 && hour === 9) {
+                const GitHubRepoAutomation = require('./github-automation.js');
+                const automation = new GitHubRepoAutomation();
+                await automation.setupWiki();
+                
+                await this.log('✅ Wiki updated successfully', 'SUCCESS');
+            } else {
+                await this.log('Wiki update not scheduled for this time', 'INFO');
+            }
+            
+            return true;
+        } catch (err) {
+            await this.log(`Wiki update failed: ${err.message}`, 'ERROR');
+            return false;
+        }
+    }
+
+    async performSecurityAudit(options = {}) {
+        try {
+            await this.log('🛡️ Performing security audit...', 'INFO');
+            
+            const auditTasks = [];
+            
+            // NPM security audit
+            auditTasks.push(
+                execAsync('npm audit --audit-level=moderate')
+                    .then(() => ({ type: 'npm-audit', status: 'success' }))
+                    .catch(err => ({ type: 'npm-audit', status: 'failed', error: err.message }))
+            );
+            
+            // Check for exposed secrets
+            auditTasks.push(
+                execAsync('git log --grep="password\\|key\\|secret\\|token" --oneline')
+                    .then(result => ({ 
+                        type: 'secret-scan', 
+                        status: result.stdout.trim() ? 'warnings' : 'clean',
+                        details: result.stdout.trim()
+                    }))
+                    .catch(err => ({ type: 'secret-scan', status: 'failed', error: err.message }))
+            );
+            
+            // Check file permissions (if on Unix-like system)
+            if (process.platform !== 'win32') {
+                auditTasks.push(
+                    execAsync('find . -type f -perm -002 -not -path "./.git/*" -not -path "./node_modules/*"')
+                        .then(result => ({ 
+                            type: 'permissions', 
+                            status: result.stdout.trim() ? 'warnings' : 'clean',
+                            details: result.stdout.trim()
+                        }))
+                        .catch(err => ({ type: 'permissions', status: 'failed', error: err.message }))
+                );
+            }
+            
+            const results = await Promise.allSettled(auditTasks);
+            let hasIssues = false;
+            
+            results.forEach(result => {
+                if (result.status === 'fulfilled') {
+                    const audit = result.value;
+                    if (audit.status === 'success' || audit.status === 'clean') {
+                        await this.log(`✅ ${audit.type}: OK`, 'SUCCESS');
+                    } else if (audit.status === 'warnings') {
+                        await this.log(`⚠️ ${audit.type}: Issues found`, 'WARN');
+                        hasIssues = true;
+                    } else {
+                        await this.log(`❌ ${audit.type}: Failed - ${audit.error}`, 'ERROR');
+                        hasIssues = true;
+                    }
+                }
+            });
+            
+            if (hasIssues) {
+                await this.log('Security audit completed with warnings', 'WARN');
+            } else {
+                await this.log('✅ Security audit: All checks passed', 'SUCCESS');
+            }
+            
+            return true;
+        } catch (err) {
+            await this.log(`Security audit failed: ${err.message}`, 'ERROR');
             return false;
         }
     }
