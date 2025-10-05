@@ -1,0 +1,56 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "haziqachik"
+    assignees:
+      - "haziqachik"
+    commit-message:
+      prefix: "📦"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "security"
+
+  # Portfolio-mixed app dependencies
+  - package-ecosystem: "npm"
+    directory: "/apps/portfolio-mixed"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:30"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "haziqachik"
+    assignees:
+      - "haziqachik"
+    commit-message:
+      prefix: "📱"
+      include: "scope"
+    labels:
+      - "portfolio"
+      - "dependencies"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+    reviewers:
+      - "haziqachik"
+    assignees:
+      - "haziqachik"
+    commit-message:
+      prefix: "🔧"
+    labels:
+      - "github-actions"
+      - "dependencies"
