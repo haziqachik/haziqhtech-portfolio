@@ -12,3 +12,16 @@
 [2025-10-05T18:58:08.975Z] [SUCCESS] ✅ CodeQL analysis workflow created
 [2025-10-05T18:58:10.146Z] [SUCCESS] ✅ Dependabot alerts enabled
 [2025-10-05T18:58:10.728Z] [SUCCESS] ✅ Automated security fixes enabled
+[2025-10-05T18:58:19.177Z] [ERROR] Wiki setup failed: Command failed: gh api repos/haziqachik/haziqhtech-portfolio -X PATCH --input -
+gh: HTTP 400
+
+[2025-10-05T18:58:19.197Z] [ERROR] Repository optimization failed: Command failed: gh api repos/haziqachik/haziqhtech-portfolio -X PATCH --input -
+gh: HTTP 400
+
+[2025-10-05T18:58:20.911Z] [WARN] Private vulnerability reporting: Command failed: gh api repos/haziqachik/haziqhtech-portfolio -X PATCH --input -
+gh: HTTP 400
+
+[2025-10-05T18:58:20.912Z] [INFO] Security policy already exists
+[2025-10-05T18:58:20.913Z] [SUCCESS] 🎉 GitHub repository automation completed!
+[2025-10-05T18:58:20.915Z] [INFO] 📊 Check the Security tab for enabled features
+[2025-10-05T18:58:20.916Z] [INFO] 📖 Visit the Wiki for comprehensive documentation
