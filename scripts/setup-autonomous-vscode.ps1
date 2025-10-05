@@ -27,11 +27,11 @@ if (Test-Path $settingsPath) {
 # Create a flag file to indicate autonomous mode
 $autonomousFlag = "$PWD\.vscode\autonomous-mode.json"
 @{
-    "enabled" = $true
-    "timestamp" = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-    "autoApproveAll" = $true
+    "enabled"         = $true
+    "timestamp"       = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    "autoApproveAll"  = $true
     "silentExecution" = $true
-    "backgroundMode" = $true
+    "backgroundMode"  = $true
 } | ConvertTo-Json | Set-Content $autonomousFlag
 
 Write-Host "🚀 Starting VS Code with autonomous configuration..." -ForegroundColor Green
