@@ -24,6 +24,19 @@ class UltimateAutonomousAssistant {
         this.maxMemoryUsage = 2 * 1024 * 1024 * 1024; // 2GB limit
         this.logFile = path.join(this.projectRoot, 'ultimate-autonomous.log');
         
+        // Enhanced task types including GitHub automation
+        this.availableTasks = [
+            'commit-changes',
+            'build-project',
+            'deploy-project',
+            'install-dependencies',
+            'check-updates',
+            'github-security',
+            'wiki-update',
+            'security-audit',
+            'performance-check'
+        ];
+        
         // Performance optimization settings
         this.optimizationSettings = {
             maxOpenFiles: 100,
