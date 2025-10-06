@@ -1,0 +1,599 @@
+---
+title: "CEH penetration testing: From reconnaissance to persistence"
+summary: "My journey through ethical hacking methodologies, vulnerability assessment frameworks, and hands-on penetration testing labs that earned CEH certification while building practical security skills."
+date: "2024-09-10"
+tags:
+  - cybersecurity
+  - ethical-hacking
+  - penetration-testing
+  - ceh
+  - vulnerability-assessment
+---
+
+Earning the Certified Ethical Hacker (CEH) certification wasn't just about passing an exam—it was about building practical skills in offensive security that directly complement my network engineering and automation background. After months of hands-on lab work and real-world security testing, I've developed a comprehensive approach to ethical hacking that bridges theoretical knowledge with operational security expertise.
+
+## The CEH Journey: Beyond Certification
+
+**Learning Methodology:**
+- 200+ hours of hands-on lab practice
+- Custom-built vulnerable environments for safe testing
+- Integration with existing CCNA network knowledge
+- Real-world application to government security requirements
+- Documentation-driven learning for knowledge retention
+
+**Practical Focus Areas:**
+- Network reconnaissance and enumeration
+- Vulnerability assessment and exploitation
+- Post-exploitation techniques and persistence
+- Incident response and remediation planning
+- Security documentation and reporting
+
+## Phase 1: Reconnaissance - The Foundation of Ethical Hacking
+
+### Information Gathering Framework
+```bash
+#!/bin/bash
+# Comprehensive Reconnaissance Automation Script
+
+TARGET_DOMAIN=$1
+OUTPUT_DIR="recon_$(date +%Y%m%d_%H%M%S)"
+
+# Create structured output directory
+mkdir -p $OUTPUT_DIR/{nmap,dns,web,social}
+
+echo "[*] Starting reconnaissance for $TARGET_DOMAIN"
+echo "[*] Output directory: $OUTPUT_DIR"
+
+# DNS enumeration
+echo "[+] DNS Enumeration"
+dnsrecon -d $TARGET_DOMAIN -t std > $OUTPUT_DIR/dns/dnsrecon.txt
+dig any $TARGET_DOMAIN > $OUTPUT_DIR/dns/dig_any.txt
+
+# Subdomain discovery  
+echo "[+] Subdomain Discovery"
+subfinder -d $TARGET_DOMAIN -o $OUTPUT_DIR/dns/subdomains.txt
+amass enum -d $TARGET_DOMAIN >> $OUTPUT_DIR/dns/subdomains.txt
+
+# Port scanning with service detection
+echo "[+] Port Scanning"
+nmap -sS -sV -O -A $TARGET_DOMAIN -oA $OUTPUT_DIR/nmap/full_scan
+
+# Web application discovery
+echo "[+] Web Application Analysis" 
+whatweb $TARGET_DOMAIN > $OUTPUT_DIR/web/whatweb.txt
+nikto -h $TARGET_DOMAIN -o $OUTPUT_DIR/web/nikto.txt
+
+echo "[*] Reconnaissance complete. Review results in $OUTPUT_DIR"
+```
+
+### OSINT Integration with Government Context
+Drawing from my maritime surveillance background, I developed enhanced OSINT techniques:
+
+```python
+# Advanced OSINT Framework for Security Assessment
+import requests
+import json
+from typing import Dict, List
+import whois
+from datetime import datetime
+
+class SecurityReconFramework:
+    def __init__(self, target_domain: str):
+        self.target = target_domain
+        self.results = {
+            'domain_info': {},
+            'infrastructure': {},
+            'social_footprint': {},
+            'security_posture': {},
+            'threat_indicators': []
+        }
+    
+    def analyze_domain_infrastructure(self) -> Dict:
+        """Comprehensive domain and infrastructure analysis"""
+        try:
+            # WHOIS analysis with operational context
+            whois_data = whois.whois(self.target)
+            
+            self.results['domain_info'] = {
+                'registrar': whois_data.registrar,
+                'creation_date': whois_data.creation_date,
+                'expiration_date': whois_data.expiration_date,
+                'admin_contact': self.sanitize_contact_info(whois_data.admin_email),
+                'dns_servers': whois_data.name_servers
+            }
+            
+            # DNS security assessment
+            self.assess_dns_security()
+            
+            # Certificate analysis
+            self.analyze_ssl_certificates()
+            
+            return self.results['domain_info']
+            
+        except Exception as e:
+            self.log_recon_error("domain_analysis", str(e))
+            return {}
+    
+    def assess_dns_security(self):
+        """DNS security configuration analysis"""
+        dns_checks = {
+            'spf_record': self.check_spf_record(),
+            'dmarc_policy': self.check_dmarc_policy(), 
+            'dnssec_enabled': self.check_dnssec(),
+            'caa_records': self.check_caa_records()
+        }
+        
+        self.results['security_posture']['dns'] = dns_checks
+        
+        # Flag potential security issues
+        if not dns_checks['spf_record']:
+            self.results['threat_indicators'].append({
+                'type': 'EMAIL_SECURITY',
+                'severity': 'MEDIUM',
+                'description': 'Missing SPF record - email spoofing vulnerability'
+            })
+    
+    def generate_security_report(self) -> str:
+        """Generate comprehensive security assessment report"""
+        report = f"""
+# Security Reconnaissance Report
+**Target:** {self.target}
+**Assessment Date:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Executive Summary
+Domain analysis reveals {len(self.results['threat_indicators'])} security concerns requiring attention.
+
+## Infrastructure Analysis
+- **Registrar:** {self.results['domain_info'].get('registrar', 'Unknown')}
+- **DNS Security:** {'CONFIGURED' if self.results['security_posture'].get('dns', {}).get('dnssec_enabled') else 'NEEDS_ATTENTION'}
+- **Email Security:** {'HARDENED' if self.results['security_posture'].get('dns', {}).get('spf_record') else 'VULNERABLE'}
+
+## Threat Indicators
+"""
+        
+        for indicator in self.results['threat_indicators']:
+            report += f"- **{indicator['severity']}:** {indicator['description']}\n"
+        
+        return report
+```
+
+## Phase 2: Vulnerability Assessment - Systematic Security Analysis
+
+### Custom Vulnerability Scanner
+```python
+# Network Vulnerability Assessment Framework
+import nmap
+import socket
+from concurrent.futures import ThreadPoolExecutor
+import ssl
+import subprocess
+
+class NetworkVulnerabilityScanner:
+    def __init__(self, target_range: str):
+        self.target_range = target_range
+        self.nm = nmap.PortScanner()
+        self.vulnerabilities = []
+        
+    def comprehensive_scan(self) -> List[Dict]:
+        """Multi-phase vulnerability assessment"""
+        
+        # Phase 1: Host discovery and port enumeration
+        live_hosts = self.discover_live_hosts()
+        
+        # Phase 2: Service version detection
+        service_info = self.enumerate_services(live_hosts)
+        
+        # Phase 3: Vulnerability detection
+        vulnerabilities = self.detect_vulnerabilities(service_info)
+        
+        # Phase 4: SSL/TLS security assessment
+        ssl_vulns = self.assess_ssl_security(service_info)
+        
+        return vulnerabilities + ssl_vulns
+    
+    def detect_vulnerabilities(self, services: List[Dict]) -> List[Dict]:
+        """Systematic vulnerability detection"""
+        detected_vulns = []
+        
+        for service in services:
+            # Check for common service vulnerabilities
+            if service['name'] == 'ssh' and service['version']:
+                ssh_vulns = self.check_ssh_vulnerabilities(service)
+                detected_vulns.extend(ssh_vulns)
+            
+            elif service['name'] == 'http' or service['name'] == 'https':
+                web_vulns = self.check_web_vulnerabilities(service)
+                detected_vulns.extend(web_vulns)
+                
+            elif service['name'] == 'ftp':
+                ftp_vulns = self.check_ftp_vulnerabilities(service)
+                detected_vulns.extend(ftp_vulns)
+        
+        return detected_vulns
+    
+    def check_ssh_vulnerabilities(self, service: Dict) -> List[Dict]:
+        """SSH-specific vulnerability checks"""
+        vulnerabilities = []
+        
+        # Check for weak SSH configuration
+        try:
+            result = subprocess.run([
+                'ssh-audit', 
+                f"{service['host']}:{service['port']}"
+            ], capture_output=True, text=True, timeout=30)
+            
+            if 'weak' in result.stdout.lower():
+                vulnerabilities.append({
+                    'type': 'SSH_WEAK_CONFIG',
+                    'severity': 'MEDIUM',
+                    'host': service['host'],
+                    'port': service['port'],
+                    'description': 'Weak SSH configuration detected',
+                    'recommendation': 'Disable weak ciphers and key exchange algorithms'
+                })
+                
+        except Exception as e:
+            self.log_scan_error('ssh_audit', str(e))
+        
+        return vulnerabilities
+    
+    def generate_vulnerability_report(self, vulnerabilities: List[Dict]) -> str:
+        """Generate actionable vulnerability report"""
+        
+        # Categorize by severity
+        critical = [v for v in vulnerabilities if v['severity'] == 'CRITICAL']
+        high = [v for v in vulnerabilities if v['severity'] == 'HIGH'] 
+        medium = [v for v in vulnerabilities if v['severity'] == 'MEDIUM']
+        
+        report = f"""
+# Network Vulnerability Assessment Report
+
+## Summary
+- **Critical:** {len(critical)} vulnerabilities require immediate attention
+- **High:** {len(high)} vulnerabilities should be addressed within 48 hours  
+- **Medium:** {len(medium)} vulnerabilities should be remediated within 1 week
+
+## Critical Vulnerabilities
+"""
+        
+        for vuln in critical:
+            report += f"""
+### {vuln['type']} - {vuln['host']}:{vuln['port']}
+**Description:** {vuln['description']}
+**Recommendation:** {vuln['recommendation']}
+**CVSS Score:** {vuln.get('cvss_score', 'N/A')}
+"""
+        
+        return report
+```
+
+## Phase 3: Exploitation - Controlled Security Testing
+
+### Ethical Exploitation Framework
+```bash
+#!/bin/bash
+# Controlled Exploitation Testing Framework
+# WARNING: Only use in authorized penetration testing environments
+
+TARGET_HOST=$1
+EXPLOIT_TYPE=$2
+LOG_FILE="exploit_$(date +%Y%m%d_%H%M%S).log"
+
+# Comprehensive logging for all exploitation attempts
+log_activity() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a $LOG_FILE
+}
+
+# Pre-exploitation validation
+validate_authorization() {
+    echo "=== AUTHORIZATION VALIDATION ==="
+    echo "Target: $TARGET_HOST"
+    echo "Exploitation Type: $EXPLOIT_TYPE"
+    echo "Tester: $(whoami)"
+    echo "Testing Environment: LAB"
+    echo "Authorization Status: CONFIRMED"
+    echo "================================"
+}
+
+# Web application exploitation testing
+test_web_vulnerabilities() {
+    log_activity "Starting web application security testing"
+    
+    # SQL Injection testing with SQLMap
+    log_activity "Testing for SQL injection vulnerabilities"
+    sqlmap -u "http://$TARGET_HOST/vulnerable.php?id=1" \
+           --batch --level=3 --risk=2 \
+           --output-dir="sqlmap_$(date +%Y%m%d)" \
+           >> $LOG_FILE 2>&1
+    
+    # XSS vulnerability detection
+    log_activity "Testing for Cross-Site Scripting (XSS)"
+    xsser -u "http://$TARGET_HOST" \
+          --auto \
+          --report="xss_report_$(date +%Y%m%d).html" \
+          >> $LOG_FILE 2>&1
+    
+    # Directory traversal testing
+    log_activity "Testing for directory traversal vulnerabilities"
+    dirb http://$TARGET_HOST /usr/share/dirb/wordlists/common.txt \
+         -o "dirb_$(date +%Y%m%d).txt" \
+         >> $LOG_FILE 2>&1
+}
+
+# Network service exploitation testing
+test_network_services() {
+    log_activity "Starting network service exploitation testing"
+    
+    # Metasploit framework integration for controlled testing
+    msfconsole -q -x "
+        use auxiliary/scanner/smb/smb_version;
+        set RHOSTS $TARGET_HOST;
+        run;
+        use auxiliary/scanner/ssh/ssh_version;
+        set RHOSTS $TARGET_HOST;
+        run;
+        exit;
+    " >> $LOG_FILE 2>&1
+}
+
+# Post-exploitation analysis (in controlled environment)
+analyze_exploitation_results() {
+    log_activity "Analyzing exploitation results"
+    
+    # Generate findings summary
+    cat > "exploitation_summary_$(date +%Y%m%d).md" << EOF
+# Penetration Testing Results
+
+## Target Information
+- **Host:** $TARGET_HOST
+- **Test Date:** $(date)
+- **Tester:** $(whoami)
+- **Environment:** Controlled Lab Environment
+
+## Vulnerabilities Identified
+$(grep -i "vulnerable\|exploit\|success" $LOG_FILE | head -10)
+
+## Remediation Recommendations
+1. Apply security patches for identified vulnerabilities
+2. Implement input validation for web applications
+3. Configure proper access controls and authentication
+4. Enable comprehensive logging and monitoring
+
+## Evidence Location
+- Detailed logs: $LOG_FILE
+- SQLMap results: sqlmap_$(date +%Y%m%d)/
+- XSS report: xss_report_$(date +%Y%m%d).html
+EOF
+
+    log_activity "Exploitation testing complete. Results saved to exploitation_summary_$(date +%Y%m%d).md"
+}
+
+# Main execution with safety checks
+main() {
+    validate_authorization
+    
+    case $EXPLOIT_TYPE in
+        "web")
+            test_web_vulnerabilities
+            ;;
+        "network") 
+            test_network_services
+            ;;
+        "full")
+            test_web_vulnerabilities
+            test_network_services
+            ;;
+        *)
+            echo "Usage: $0 <target_host> <web|network|full>"
+            exit 1
+            ;;
+    esac
+    
+    analyze_exploitation_results
+}
+
+# Execute with proper authorization validation
+if [[ $# -lt 2 ]]; then
+    echo "Usage: $0 <target_host> <exploit_type>"
+    echo "Exploit types: web, network, full"
+    exit 1
+fi
+
+main
+```
+
+## Phase 4: Post-Exploitation & Persistence - Advanced Techniques
+
+### Persistence Mechanism Analysis
+```powershell
+# Windows Post-Exploitation Analysis Framework
+# Educational/Lab Environment Only
+
+function Analyze-WindowsPersistence {
+    param([string]$TargetSystem, [string]$AccessLevel)
+    
+    $PersistenceReport = @{
+        Timestamp = Get-Date
+        Target = $TargetSystem
+        AccessLevel = $AccessLevel
+        Mechanisms = @()
+        Recommendations = @()
+    }
+    
+    Write-Host "[*] Analyzing Windows persistence mechanisms on $TargetSystem"
+    
+    # Registry-based persistence analysis
+    $RegistryPersistence = Analyze-RegistryPersistence
+    $PersistenceReport.Mechanisms += $RegistryPersistence
+    
+    # Service-based persistence
+    $ServicePersistence = Analyze-ServicePersistence  
+    $PersistenceReport.Mechanisms += $ServicePersistence
+    
+    # Scheduled task persistence
+    $TaskPersistence = Analyze-ScheduledTaskPersistence
+    $PersistenceReport.Mechanisms += $TaskPersistence
+    
+    # Generate security recommendations
+    $PersistenceReport.Recommendations = Generate-PersistenceCountermeasures $PersistenceReport.Mechanisms
+    
+    return $PersistenceReport
+}
+
+function Analyze-RegistryPersistence {
+    $RegistryKeys = @(
+        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
+        "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", 
+        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce"
+    )
+    
+    $RegistryAnalysis = @()
+    
+    foreach ($Key in $RegistryKeys) {
+        try {
+            $Values = Get-ItemProperty -Path $Key -ErrorAction SilentlyContinue
+            if ($Values) {
+                $RegistryAnalysis += @{
+                    Type = "REGISTRY_RUN_KEY"
+                    Location = $Key
+                    Risk = "MEDIUM"
+                    Description = "Autostart registry key could be used for persistence"
+                    Countermeasure = "Monitor registry modifications with Sysmon"
+                }
+            }
+        }
+        catch {
+            Write-Warning "Could not access registry key: $Key"
+        }
+    }
+    
+    return $RegistryAnalysis
+}
+
+function Generate-PersistenceCountermeasures {
+    param([array]$Mechanisms)
+    
+    $Countermeasures = @()
+    
+    # Generic countermeasures
+    $Countermeasures += "Implement comprehensive endpoint detection and response (EDR)"
+    $Countermeasures += "Enable PowerShell script block logging"  
+    $Countermeasures += "Deploy Sysmon for advanced system monitoring"
+    $Countermeasures += "Implement application whitelisting with AppLocker"
+    $Countermeasures += "Regular security baseline validation"
+    
+    # Mechanism-specific countermeasures
+    foreach ($Mechanism in $Mechanisms) {
+        switch ($Mechanism.Type) {
+            "REGISTRY_RUN_KEY" {
+                $Countermeasures += "Monitor HKLM/HKCU Run key modifications"
+            }
+            "SERVICE_PERSISTENCE" {
+                $Countermeasures += "Audit service creation and modification events"
+            }
+            "SCHEDULED_TASK" {
+                $Countermeasures += "Monitor scheduled task creation via Event ID 4698"
+            }
+        }
+    }
+    
+    return $Countermeasures | Sort-Object | Get-Unique
+}
+```
+
+## Real-World Application: Government Security Context
+
+### Security Assessment Methodology
+Drawing from my government background, I developed assessment frameworks aligned with public sector requirements:
+
+```yaml
+# Government Security Assessment Framework
+assessment_framework:
+  classification_levels:
+    - UNCLASSIFIED
+    - OFFICIAL
+    - OFFICIAL_SENSITIVE
+    - PROTECTED
+    
+  compliance_requirements:
+    - IM8_SINGAPORE_GOVERNMENT
+    - ISO27001_CONTROLS
+    - NIST_CYBERSECURITY_FRAMEWORK
+    
+  testing_methodology:
+    phase_1_reconnaissance:
+      duration: "2-3 days"
+      activities:
+        - OSINT gathering
+        - DNS enumeration  
+        - Network mapping
+        - Service identification
+      
+    phase_2_vulnerability_assessment:
+      duration: "3-5 days" 
+      activities:
+        - Automated vulnerability scanning
+        - Manual security testing
+        - Configuration review
+        - Patch level assessment
+        
+    phase_3_penetration_testing:
+      duration: "5-7 days"
+      activities:
+        - Controlled exploitation
+        - Privilege escalation testing
+        - Lateral movement analysis
+        - Data exfiltration simulation
+        
+    phase_4_reporting:
+      duration: "2-3 days"
+      deliverables:
+        - Executive summary
+        - Technical findings report
+        - Risk assessment matrix
+        - Remediation roadmap
+```
+
+## Lessons from CEH: Bridging Offense and Defense
+
+### Key Insights Gained:
+
+1. **Attacker Mindset**: Understanding how adversaries think improves defensive strategies
+2. **Systematic Methodology**: Structured approaches yield more comprehensive results
+3. **Documentation Critical**: Every step must be recorded for reproducibility and compliance
+4. **Ethics First**: Proper authorization and scope boundaries are non-negotiable
+
+### Integration with Existing Skills:
+
+**Network Engineering + Penetration Testing:**
+- CCNA routing/switching knowledge enables advanced network-based attacks
+- Understanding of network protocols aids in traffic analysis and detection evasion
+- Firewall and ACL experience helps identify security gaps
+
+**Automation + Security Testing:**
+- RPA skills enable automated vulnerability scanning and reporting
+- PowerShell expertise facilitates Windows post-exploitation analysis
+- Python capabilities support custom tool development
+
+**Government Experience + Ethical Hacking:**
+- Understanding of compliance requirements guides testing methodology
+- Experience with sensitive data handling ensures appropriate testing boundaries
+- Documentation skills produce audit-ready security reports
+
+### Practical Applications:
+
+**Current Role at BCA:**
+- Security assessments of Power BI platforms and data workflows
+- Vulnerability analysis of FormSG integrations and automation systems
+- Security hardening recommendations for multi-agency data sharing
+
+**Future Career Alignment:**
+- Network security engineering with offensive security perspective
+- Cybersecurity consulting for government and critical infrastructure
+- Security architecture design informed by real-world attack patterns
+
+## The Certification and Beyond
+
+The CEH certification validated my practical skills, but the real value was in developing a systematic approach to security testing that complements my automation and infrastructure background. The combination of ethical hacking techniques with government operational experience creates unique opportunities to build truly secure systems from the ground up.
+
+*Next steps: Integrating CEH methodologies with CCNA network security labs and Azure cloud security (AZ-500) to develop comprehensive cybersecurity engineering capabilities across on-premises and cloud environments.*

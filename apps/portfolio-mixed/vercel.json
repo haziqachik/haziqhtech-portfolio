@@ -6,5 +6,7 @@
     "USE_MOCK_MONGODB": "false",
     "NEXTAUTH_SECRET": "haziq-portfolio-production-2025-secure-key-auto-deploy"
   },
-  "regions": ["sin1"]
+  "regions": [
+    "sin1"
+  ]
 }

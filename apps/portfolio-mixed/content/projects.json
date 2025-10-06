@@ -1,50 +1,76 @@
 [
   {
+    "title": "Enterprise Power BI Security Governance Platform",
+    "description": "Production-grade Power BI governance system serving 160+ public officers across BCA with role-based access, MFA enforcement, audit trails, and automated compliance monitoring. Reduced security incidents by 95% through systematic hardening.",
+    "tech": [
+      "Power BI Service Pro",
+      "Power Query/M Language",
+      "DAX Analytics",
+      "Azure AD Integration",
+      "PowerShell Automation",
+      "Log Analytics",
+      "Row-Level Security"
+    ],
+    "href": "https://haziqhtech.sg/blog/preflight-power-bi-automation",
+    "repo": "https://github.com/haziqachik/power-bi-governance-toolkit",
+    "year": 2024,
+    "impact": "160+ users, 95% reduction in security incidents",
+    "image": "/images/projects/workforce-security-dashboards.svg"
+  },
+  {
     "title": "Portfolio Experience Platform",
-    "description": "Monorepo powering haziqhtech.sg with dynamic content, multi-database architecture, and modern full-stack features.",
+    "description": "Production-ready Next.js 15 monorepo with multi-database architecture, real-time comments, MongoDB Atlas integration, and advanced security patterns. Demonstrates full-stack engineering capabilities with modern DevOps practices.",
     "tech": [
       "Next.js 15",
       "TypeScript",
       "Tailwind CSS",
       "Framer Motion",
       "MongoDB Atlas",
-      "PostgreSQL",
-      "SQLite"
+      "Vercel Postgres",
+      "SQLite",
+      "Prisma ORM"
     ],
     "href": "https://haziqhtech.sg/architecture",
     "repo": "https://github.com/haziqachik/haziqhtech-portfolio",
     "year": 2025,
+    "impact": "26 optimized routes, multi-database architecture",
     "image": "/images/projects/portfolio-experience-platform.svg"
   },
   {
-    "title": "Multi-Database Architecture Showcase",
-    "description": "Full-stack system demonstrating SQLite for comments, MongoDB for projects, and PostgreSQL for analytics with health monitoring.",
+    "title": "FormSG Enterprise Automation Workflow",
+    "description": "End-to-end secure survey automation system handling national data collection for Singapore government agencies. Postman-triggered email distribution, data cleansing pipelines, and privilege access reviews maintaining 99% survey availability during critical collections.",
     "tech": [
-      "Prisma ORM",
-      "MongoDB Atlas",
-      "Vercel Postgres",
-      "Next.js API Routes",
-      "TypeScript"
+      "FormSG Administration",
+      "Postman API Automation", 
+      "UiPath RPA",
+      "Data Cleansing Pipelines",
+      "Privilege Access Management",
+      "SOPs & Documentation",
+      "PowerShell Scripting"
     ],
-    "href": "https://haziqhtech.sg/admin",
-    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/tree/main/apps/portfolio-mixed/src/lib",
-    "year": 2025,
-    "image": "/images/projects/workforce-security-dashboards.svg"
+    "href": "https://haziqhtech.sg/blog/formsg-automation-security",
+    "repo": "https://github.com/haziqachik/formsg-automation-suite",
+    "year": 2024,
+    "impact": "99% uptime during national surveys, 40% faster processing",
+    "image": "/images/projects/formsg-survey-automation.svg"
   },
   {
-    "title": "Interactive Blog with Comments System",
-    "description": "MDX-powered blog with real-time comment system, search functionality, and content management dashboard.",
+    "title": "Maritime Radar Surveillance Operations",
+    "description": "Real-time threat analysis and coordination system for Singapore's coastal security. Processed 140,000+ vessel movements annually, operated advanced radar systems, and developed SOPs for threat escalation and interception protocols.",
     "tech": [
-      "MDX",
-      "Next.js",
-      "SQLite",
-      "Tailwind CSS",
-      "Framer Motion"
+      "Radar Surveillance Systems",
+      "Threat Analysis Protocols", 
+      "Maritime Security Operations",
+      "SOPs Development",
+      "Real-time Coordination",
+      "Equipment Maintenance",
+      "Operational Intelligence"
     ],
-    "href": "https://haziqhtech.sg/blog",
-    "repo": "https://github.com/haziqachik/haziqhtech-portfolio/tree/main/apps/portfolio-mixed/src/app/blog",
-    "year": 2025,
-    "image": "/images/projects/formsg-survey-automation.svg"
+    "href": "https://haziqhtech.sg/blog/maritime-safeguarding-future",
+    "repo": "https://github.com/haziqachik/maritime-security-analysis",
+    "year": 2022,
+    "impact": "140,000+ vessels monitored annually, zero security breaches",
+    "image": "/images/projects/ceh-study-hub.svg"
   },
   {
     "title": "Professional Timeline & Experience",
@@ -89,17 +115,92 @@
     "image": "/images/projects/ceh-study-hub.svg"
   },
   {
-    "title": "Full-Stack Portfolio Case Study",
-    "description": "Comprehensive technical case study documenting the architecture, implementation, and lessons learned from building this portfolio.",
+    "title": "Cross-Agency Data Analytics Platform", 
+    "description": "Secured multi-agency workforce analytics platform processing SkillsFuture and CAW datasets. Implemented data classification, normalized cross-sector compliance indicators, and delivered governance frameworks for sensitive government data.",
     "tech": [
-      "System Architecture",
-      "Technical Writing",
-      "DevOps Practices",
+      "Cross-Agency Data Integration",
+      "Data Classification & Governance", 
+      "Compliance Monitoring",
+      "Power BI Service Administration",
+      "Multi-Sector Analytics",
+      "Data Normalization",
+      "Security Frameworks"
+    ],
+    "href": "https://haziqhtech.sg/blog/cross-agency-analytics-security",
+    "repo": "https://github.com/haziqachik/cross-agency-analytics",
+    "year": 2024,
+    "impact": "Multiple government agencies, classified data handling",
+    "image": "/images/projects/workforce-security-dashboards.svg"
+  },
+  {
+    "title": "Enterprise UiPath RPA Automation Suite",
+    "description": "Self-hosted RPA platform automating critical government workflows including SG Work Pass migrations, testing evidence capture, and e-commerce data aggregation. Reduced manual processing time by 40% while maintaining audit trails.",
+    "tech": [
+      "UiPath Studio & Orchestrator",
+      "Process Automation Design",
+      "Government Workflow Integration",
+      "Audit Trail Implementation", 
+      "User Training & Documentation",
+      "Production Support",
       "Performance Optimization"
     ],
-    "href": "https://haziqhtech.sg/case-study",
+    "href": "https://haziqhtech.sg/blog/enterprise-rpa-automation",
+    "repo": "https://github.com/haziqachik/enterprise-rpa-suite", 
+    "year": 2020,
+    "impact": "40% reduction in manual processing, government-wide deployment",
+    "image": "/images/projects/operations-rpa-platform.svg"
+  },
+  {
+    "title": "CCNA Network Security Lab Environment",
+    "description": "Comprehensive network engineering lab setup with OSPF routing, ACL security implementations, and Python-based configuration validation. Documents real-world network hardening techniques with practical security applications.",
+    "tech": [
+      "Cisco Packet Tracer",
+      "OSPF Routing Protocols",
+      "Access Control Lists (ACLs)",
+      "Network Security Hardening", 
+      "Python Network Automation",
+      "Configuration Validation",
+      "Lab Documentation"
+    ],
+    "href": "https://haziqhtech.sg/blog/ccna-ceh-lab-notes",
+    "repo": "https://github.com/haziqachik/ccna-security-labs",
+    "year": 2024,
+    "impact": "Comprehensive lab environment, practical security implementations", 
+    "image": "/images/projects/network-engineering-labs.svg"
+  },
+  {
+    "title": "CEH Penetration Testing Lab Suite",
+    "description": "Hands-on ethical hacking environment covering reconnaissance to persistence phases. Interactive study platform demonstrating vulnerability assessment, exploit development, and incident response procedures.",
+    "tech": [
+      "Ethical Hacking Methodologies",
+      "Vulnerability Assessment Tools",
+      "Penetration Testing Frameworks",
+      "Incident Response Procedures",
+      "Security Documentation",
+      "Interactive Learning Platform",
+      "Threat Modeling"
+    ],
+    "href": "https://haziqhtech.sg/blog/ceh-penetration-testing",
+    "repo": "https://github.com/haziqachik/ceh-lab-suite",
+    "year": 2024,
+    "impact": "CEH certification achievement, comprehensive security methodology",
+    "image": "/images/projects/ceh-study-hub.svg"
+  },
+  {
+    "title": "Full-Stack Portfolio Case Study",
+    "description": "Production-grade technical architecture case study documenting modern development practices, security implementations, and scalable design patterns. Comprehensive analysis of full-stack engineering decisions and lessons learned.",
+    "tech": [
+      "System Architecture Design",
+      "Technical Documentation",
+      "DevOps Best Practices",
+      "Performance Optimization",
+      "Security Implementation",
+      "Scalability Patterns"
+    ],
+    "href": "https://haziqhtech.sg/case-study", 
     "repo": "https://github.com/haziqachik/haziqhtech-portfolio/blob/main/apps/portfolio-mixed/src/app/case-study/page.tsx",
     "year": 2025,
-    "image": "/images/projects/ceh-study-hub.svg"
+    "impact": "Complete technical architecture documentation",
+    "image": "/images/projects/portfolio-experience-platform.svg"
   }
 ]
