@@ -10,8 +10,6 @@
     },
     "dependencies": {
         "@emailjs/browser": "^4.4.1",
-        "@giscus/react": "^2.4.0",
-        "@haziq/ui": "file:../../packages/ui",
         "@prisma/client": "^6.16.3",
         "@radix-ui/react-dialog": "^1.0.5",
         "@radix-ui/react-slot": "^1.0.3",

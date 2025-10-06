@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Button as UiButton } from "@haziq/ui";
+
 
 import { cn } from "@/lib/utils";
 
@@ -27,21 +27,19 @@ export function DesktopNav({ links }: { links: NavLinkItem[] }) {
       {links.map((item) => {
         const active = isActive(pathname, item.href);
         return (
-          <UiButton
+          <Link
             key={item.href}
-            as={Link}
             href={item.href}
-            variant="ghost"
             aria-current={active ? "page" : undefined}
             className={cn(
-              "rounded-full px-4 py-2 text-sm font-medium transition",
+              "inline-flex items-center justify-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground",
               active
                 ? "bg-primary/15 text-foreground shadow-soft-sm"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             {item.label}
-          </UiButton>
+          </Link>
         );
       })}
     </>
