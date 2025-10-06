@@ -18,7 +18,7 @@ class AutonomousDeveloper {
     log(message, level = 'INFO') {
         const timestamp = new Date().toISOString();
         const logEntry = `[${timestamp}] ${level}: ${message}\n`;
-        
+
         console.log(`🤖 ${message}`);
         fs.appendFileSync(this.logFile, logEntry);
     }
@@ -51,7 +51,7 @@ class AutonomousDeveloper {
 
     async optimizeWorkspace() {
         this.log('Starting workspace optimization...');
-        
+
         try {
             // Close unused editors
             await this.executeCommand(
@@ -80,10 +80,10 @@ class AutonomousDeveloper {
     async monitorGitChanges() {
         try {
             const result = await this.executeCommand('git status --porcelain', 'Checking git status');
-            
+
             if (result.trim()) {
                 this.log('Uncommitted changes detected');
-                
+
                 // Auto-commit if enabled
                 if (process.env.AUTO_COMMIT === 'true') {
                     await this.executeCommand('git add -A', 'Adding all changes');
@@ -103,7 +103,7 @@ class AutonomousDeveloper {
         try {
             // Check if build is successful
             const packageJson = JSON.parse(fs.readFileSync(path.join(this.projectRoot, 'apps/portfolio-mixed/package.json')));
-            
+
             if (packageJson.scripts.build) {
                 this.log('Checking build status...');
                 await this.executeCommand('npm run build --prefix apps/portfolio-mixed', 'Building project');
@@ -140,7 +140,7 @@ class AutonomousDeveloper {
 
         this.isRunning = true;
         this.log('🚀 Autonomous Developer starting...');
-        
+
         // Initial health check
         await this.runHealthChecks();
 
@@ -179,9 +179,9 @@ class AutonomousDeveloper {
 // CLI interface
 if (require.main === module) {
     const developer = new AutonomousDeveloper();
-    
+
     const command = process.argv[2];
-    
+
     switch (command) {
         case 'start':
             developer.start();
