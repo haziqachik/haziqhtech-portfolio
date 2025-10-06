@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, ChevronDown, ChevronUp } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
   const [query, setQuery] = useState("");
   const [activeTech, setActiveTech] = useState<string | null>(null);
   const [activeYear, setActiveYear] = useState<number | null>(null);
+  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
 
   const uniqueProjects = useMemo(() => {
     const seen = new Set<string>();
@@ -62,6 +63,70 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
       return matchesQuery && matchesTech && matchesYear;
     });
   }, [uniqueProjects, query, activeTech, activeYear]);
+
+  const toggleProjectExpansion = (projectTitle: string) => {
+    setExpandedProjects(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(projectTitle)) {
+        newSet.delete(projectTitle);
+      } else {
+        newSet.add(projectTitle);
+      }
+      return newSet;
+    });
+  };
+
+  const getTechBadges = (techList: string[], projectTitle: string, maxVisible = 3) => {
+    const isExpanded = expandedProjects.has(projectTitle);
+    const visibleTech = isExpanded ? techList : techList.slice(0, maxVisible);
+    const hiddenCount = techList.length - maxVisible;
+
+    return (
+      <div className="flex flex-wrap items-center gap-2">
+        <AnimatePresence>
+          {visibleTech.map((tag, index) => (
+            <motion.div
+              key={tag}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2, delay: index * 0.05 }}
+            >
+              <Badge
+                variant="outline"
+                className="border-border/60 text-xs font-medium transition group-hover:border-primary/60 group-hover:text-primary cursor-pointer"
+                onClick={() => setActiveTech(tag)}
+              >
+                {tag}
+              </Badge>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        
+        {!isExpanded && hiddenCount > 0 && (
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => toggleProjectExpansion(projectTitle)}
+            className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            +{hiddenCount} more <ChevronDown className="ml-1 h-3 w-3" />
+          </Button>
+        )}
+        
+        {isExpanded && techList.length > maxVisible && (
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => toggleProjectExpansion(projectTitle)}
+            className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
+          >
+            Show less <ChevronUp className="ml-1 h-3 w-3" />
+          </Button>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col gap-12">
@@ -196,20 +261,44 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
                   </div>
                   <CardHeader className="space-y-3">
                     <CardTitle className="text-lg font-semibold">{project.title}</CardTitle>
-                    <CardDescription>{project.description}</CardDescription>
+                    <CardDescription className="text-sm">
+                      {expandedProjects.has(project.title) 
+                        ? project.description 
+                        : project.description.length > 120 
+                        ? `${project.description.substring(0, 120)}...`
+                        : project.description
+                      }
+                      {project.description.length > 120 && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => toggleProjectExpansion(project.title)}
+                          className="ml-2 h-auto p-0 text-xs text-primary hover:text-primary/80"
+                        >
+                          {expandedProjects.has(project.title) ? "Show less" : "Read more"}
+                        </Button>
+                      )}
+                    </CardDescription>
+                    
+                    <AnimatePresence>
+                      {expandedProjects.has(project.title) && (project as any).impact && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="rounded-lg bg-primary/5 p-3 text-xs">
+                            <div className="font-medium text-primary mb-1">Impact & Results:</div>
+                            <div className="text-muted-foreground">{(project as any).impact}</div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </CardHeader>
                   <CardContent className="flex flex-1 flex-col justify-between gap-4">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="outline"
-                          className="border-border/60 text-xs font-medium transition group-hover:border-primary/60 group-hover:text-primary"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
+                    {getTechBadges(project.tech, project.title)}
                     <div className="flex flex-wrap gap-3">
                       <Button asChild size="sm">
                         <Link href={project.href} target="_blank" rel="noopener noreferrer">
