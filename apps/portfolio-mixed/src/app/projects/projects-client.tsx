@@ -25,6 +25,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
   const [activeTech, setActiveTech] = useState<string | null>(null);
   const [activeYear, setActiveYear] = useState<number | null>(null);
   const [expandedProjects, setExpandedProjects] = useState<Set<string>>(new Set());
+  const [showAllTechFilters, setShowAllTechFilters] = useState(false);
 
   const uniqueProjects = useMemo(() => {
     const seen = new Set<string>();
@@ -195,7 +196,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
               >
                 All tech
               </Button>
-              {techOptions.map((tech) => (
+              {techOptions.slice(0, showAllTechFilters ? techOptions.length : 6).map((tech) => (
                 <Button
                   key={tech}
                   type="button"
@@ -208,6 +209,74 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
                   {tech}
                 </Button>
               ))}
+              <AnimatePresence>
+                {!showAllTechFilters && techOptions.length > 6 && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center gap-2"
+                  >
+                    <div className="flex -space-x-1">
+                      {techOptions.slice(6, 9).map((tech, index) => (
+                        <div
+                          key={tech}
+                          className="flex h-8 w-8 items-center justify-center rounded-full bg-muted/50 text-xs font-medium text-muted-foreground ring-2 ring-background"
+                          style={{ zIndex: 10 - index }}
+                          title={tech}
+                        >
+                          {tech.charAt(0).toUpperCase()}
+                        </div>
+                      ))}
+                    </div>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setShowAllTechFilters(true)}
+                      className="text-xs"
+                    >
+                      +{techOptions.length - 6} more
+                      <ChevronDown className="ml-1 h-3 w-3" />
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <AnimatePresence>
+                {showAllTechFilters && techOptions.length > 6 && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {techOptions.slice(6).map((tech) => (
+                      <Button
+                        key={tech}
+                        type="button"
+                        size="sm"
+                        variant={activeTech === tech ? "secondary" : "ghost"}
+                        onClick={() =>
+                          setActiveTech((current) => (current === tech ? null : tech))
+                        }
+                      >
+                        {tech}
+                      </Button>
+                    ))}
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setShowAllTechFilters(false)}
+                      className="text-xs"
+                    >
+                      Show less
+                      <ChevronUp className="ml-1 h-3 w-3" />
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

@@ -30,12 +30,6 @@ export const metadata: Metadata = {
     siteName: "HaziqhTech",
     images: ["/api/og"],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Haziq Asyraaf | Portfolio",
-    description: "IT Professional | Data Analyst | Cybersecurity Enthusiast",
-    images: ["/api/og"],
-  },
 };
 
 export const viewport = {

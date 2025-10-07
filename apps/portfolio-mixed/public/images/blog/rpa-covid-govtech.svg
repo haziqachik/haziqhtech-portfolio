@@ -1,0 +1,189 @@
+<svg viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:0.6"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Grid Pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.5" opacity="0.3"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Main Content Container -->
+  <g transform="translate(60, 60)">
+    
+    <!-- Header Section -->
+    <rect x="0" y="0" width="1080" height="120" rx="12" fill="url(#cardGrad)" stroke="#475569" stroke-width="1" opacity="0.9"/>
+    
+    <!-- Government Tech Building Icon -->
+    <g transform="translate(30, 25)">
+      <rect x="0" y="30" width="70" height="40" fill="#64748b" rx="2"/>
+      <rect x="5" y="35" width="8" height="8" fill="#3b82f6" opacity="0.8"/>
+      <rect x="17" y="35" width="8" height="8" fill="#3b82f6" opacity="0.8"/>
+      <rect x="29" y="35" width="8" height="8" fill="#3b82f6" opacity="0.8"/>
+      <rect x="41" y="35" width="8" height="8" fill="#3b82f6" opacity="0.8"/>
+      <rect x="53" y="35" width="8" height="8" fill="#3b82f6" opacity="0.8"/>
+      <rect x="5" y="47" width="8" height="8" fill="#3b82f6" opacity="0.6"/>
+      <rect x="17" y="47" width="8" height="8" fill="#3b82f6" opacity="0.6"/>
+      <rect x="29" y="47" width="8" height="8" fill="#3b82f6" opacity="0.6"/>
+      <rect x="41" y="47" width="8" height="8" fill="#3b82f6" opacity="0.6"/>
+      <rect x="53" y="47" width="8" height="8" fill="#3b82f6" opacity="0.6"/>
+      <rect x="5" y="59" width="8" height="8" fill="#3b82f6" opacity="0.4"/>
+      <rect x="17" y="59" width="8" height="8" fill="#3b82f6" opacity="0.4"/>
+      <rect x="29" y="59" width="8" height="8" fill="#3b82f6" opacity="0.4"/>
+      <rect x="41" y="59" width="8" height="8" fill="#3b82f6" opacity="0.4"/>
+      <rect x="53" y="59" width="8" height="8" fill="#3b82f6" opacity="0.4"/>
+      <text x="35" y="25" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="10" font-weight="bold">GOVTECH</text>
+    </g>
+    
+    <!-- Title -->
+    <text x="130" y="45" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="32" font-weight="bold">RPA in the COVID Era</text>
+    <text x="130" y="75" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="18">Building Government Automation Without AI Assistance</text>
+    <text x="130" y="100" fill="#94a3b8" font-family="Arial, sans-serif" font-size="14">Software Engineer Journey • GovTech • Ministry of Manpower • 2019-2020</text>
+    
+    <!-- Main Content Grid -->
+    <g transform="translate(0, 140)">
+      
+      <!-- Left Column: Timeline -->
+      <rect x="0" y="0" width="340" height="350" rx="12" fill="url(#cardGrad)" stroke="#475569" stroke-width="1" opacity="0.9"/>
+      <text x="20" y="30" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Career Transition</text>
+      
+      <!-- Timeline Items -->
+      <g transform="translate(20, 50)">
+        <!-- 2019 GovTech -->
+        <circle cx="8" cy="8" r="6" fill="#3b82f6" filter="url(#glow)"/>
+        <line x1="8" y1="15" x2="8" y2="35" stroke="#64748b" stroke-width="2"/>
+        <text x="25" y="12" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Jul 2019 - Feb 2020</text>
+        <text x="25" y="28" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">Software Engineer • GovTech</text>
+        
+        <!-- COVID Transition -->
+        <circle cx="8" cy="55" r="6" fill="#ef4444" filter="url(#glow)"/>
+        <line x1="8" y1="62" x2="8" y2="82" stroke="#64748b" stroke-width="2"/>
+        <text x="25" y="59" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="14" font-weight="bold">COVID-19 Outbreak</text>
+        <text x="25" y="75" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">Global Pandemic • Remote Work</text>
+        
+        <!-- MOM Role -->
+        <circle cx="8" cy="102" r="6" fill="#10b981" filter="url(#glow)"/>
+        <text x="25" y="106" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Feb 2020 - Jul 2020</text>
+        <text x="25" y="122" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">IT Officer • Ministry of Manpower</text>
+      </g>
+      
+      <!-- Key Achievements Box -->
+      <rect x="20" y="200" width="300" height="130" rx="8" fill="#1e293b" stroke="#374151" stroke-width="1"/>
+      <text x="30" y="220" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Key Achievements</text>
+      <text x="30" y="240" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">• 5,000+ SG Work Pass records processed</text>
+      <text x="30" y="255" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">• 15 automation clinics facilitated</text>
+      <text x="30" y="270" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">• 120 staff hours saved per quarter</text>
+      <text x="30" y="285" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">• Cross-agency blockchain pilot support</text>
+      <text x="30" y="300" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">• Service testimonials from both agencies</text>
+      <text x="30" y="315" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">• Video training for non-IT teams</text>
+      
+      <!-- Middle Column: Technical Challenges -->
+      <rect x="360" y="0" width="340" height="350" rx="12" fill="url(#cardGrad)" stroke="#475569" stroke-width="1" opacity="0.9"/>
+      <text x="380" y="30" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Pre-AI Era Challenges</text>
+      
+      <!-- UiPath Logo Representation -->
+      <g transform="translate(380, 50)">
+        <rect x="0" y="0" width="40" height="30" rx="4" fill="#ff6b35"/>
+        <text x="20" y="20" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="bold">UI</text>
+        <text x="50" y="20" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">UiPath Development</text>
+      </g>
+      
+      <!-- Challenge Items -->
+      <g transform="translate(380, 90)">
+        <text x="0" y="20" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Manual Selector Engineering</text>
+        <text x="0" y="35" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">No AI assistance for complex selectors</text>
+        
+        <text x="0" y="60" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Exception Handling From Scratch</text>
+        <text x="0" y="75" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">Custom retry logic & error mapping</text>
+        
+        <text x="0" y="100" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Documentation Deep Dives</text>
+        <text x="0" y="115" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">Hours reading UiPath docs manually</text>
+        
+        <text x="0" y="140" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Community Forum Reliance</text>
+        <text x="0" y="155" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">Days waiting for expert responses</text>
+        
+        <text x="0" y="180" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="13" font-weight="bold">Trial & Error Testing</text>
+        <text x="0" y="195" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="11">Extensive cycles for reliability</text>
+      </g>
+      
+      <!-- Right Column: Technology Stack -->
+      <rect x="720" y="0" width="360" height="350" rx="12" fill="url(#cardGrad)" stroke="#475569" stroke-width="1" opacity="0.9"/>
+      <text x="740" y="30" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Technology Ecosystem</text>
+      
+      <!-- Tech Stack Grid -->
+      <g transform="translate(740, 50)">
+        <!-- Row 1 -->
+        <rect x="0" y="0" width="80" height="50" rx="6" fill="#1e293b" stroke="#374151"/>
+        <text x="40" y="20" text-anchor="middle" fill="#3b82f6" font-family="Arial, sans-serif" font-size="10" font-weight="bold">UiPath</text>
+        <text x="40" y="33" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="9">RPA Platform</text>
+        
+        <rect x="100" y="0" width="80" height="50" rx="6" fill="#1e293b" stroke="#374151"/>
+        <text x="140" y="20" text-anchor="middle" fill="#10b981" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Excel</text>
+        <text x="140" y="33" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="9">Data Processing</text>
+        
+        <rect x="200" y="0" width="80" height="50" rx="6" fill="#1e293b" stroke="#374151"/>
+        <text x="240" y="20" text-anchor="middle" fill="#f59e0b" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Web APIs</text>
+        <text x="240" y="33" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="9">Integration</text>
+        
+        <!-- Row 2 -->
+        <rect x="0" y="70" width="80" height="50" rx="6" fill="#1e293b" stroke="#374151"/>
+        <text x="40" y="90" text-anchor="middle" fill="#8b5cf6" font-family="Arial, sans-serif" font-size="10" font-weight="bold">SQL Server</text>
+        <text x="40" y="103" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="9">Database</text>
+        
+        <rect x="100" y="70" width="80" height="50" rx="6" fill="#1e293b" stroke="#374151"/>
+        <text x="140" y="90" text-anchor="middle" fill="#ef4444" font-family="Arial, sans-serif" font-size="10" font-weight="bold">VB.NET</text>
+        <text x="140" y="103" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="9">Scripting</text>
+        
+        <rect x="200" y="70" width="80" height="50" rx="6" fill="#1e293b" stroke="#374151"/>
+        <text x="240" y="90" text-anchor="middle" fill="#06b6d4" font-family="Arial, sans-serif" font-size="10" font-weight="bold">Blockchain</text>
+        <text x="240" y="103" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="9">Pilot Project</text>
+      </g>
+      
+      <!-- Government Systems -->
+      <g transform="translate(740, 170)">
+        <text x="0" y="20" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Government Systems</text>
+        <rect x="0" y="30" width="320" height="2" fill="url(#accent)"/>
+        
+        <text x="0" y="55" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">• SG Work Pass Portal Integration</text>
+        <text x="0" y="75" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">• Multi-language Form Processing</text>
+        <text x="0" y="95" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">• Cross-agency Data Workflows</text>
+        <text x="0" y="115" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">• Legacy System Modernization</text>
+        <text x="0" y="135" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="12">• Security Compliance Automation</text>
+      </g>
+    </g>
+    
+  </g>
+  
+  <!-- Bottom Banner -->
+  <rect x="0" y="570" width="1200" height="60" fill="#0f172a" opacity="0.9"/>
+  <text x="60" y="595" fill="#64748b" font-family="Arial, sans-serif" font-size="12">COVID-19 Era RPA Development</text>
+  <text x="60" y="610" fill="#475569" font-family="Arial, sans-serif" font-size="10">Building critical government automation without modern AI assistance • Singapore 2019-2020</text>
+  
+  <!-- Decorative Elements -->
+  <circle cx="1100" cy="100" r="30" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0.3"/>
+  <circle cx="1100" cy="100" r="20" fill="none" stroke="#1d4ed8" stroke-width="1" opacity="0.5"/>
+  <circle cx="1100" cy="100" r="10" fill="#3b82f6" opacity="0.3"/>
+  
+</svg>

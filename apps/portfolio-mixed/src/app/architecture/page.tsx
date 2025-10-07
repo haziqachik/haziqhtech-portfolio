@@ -141,7 +141,7 @@ export default function ArchitecturePage() {
                       <Database className="h-8 w-8 mx-auto mb-2 text-blue-600" />
                       <div className="font-semibold text-blue-800">Postgres</div>
                       <div className="text-xs text-blue-600">Analytics Data</div>
-                      <Badge className="mt-2 bg-yellow-100 text-yellow-800 text-xs">READY</Badge>
+                      <Badge className="mt-2 bg-green-100 text-green-800 text-xs">DEPLOYED</Badge>
                     </CardContent>
                   </Card>
                   
@@ -150,7 +150,7 @@ export default function ArchitecturePage() {
                       <Database className="h-8 w-8 mx-auto mb-2 text-purple-600" />
                       <div className="font-semibold text-purple-800">MongoDB</div>
                       <div className="text-xs text-purple-600">Projects Data</div>
-                      <Badge className="mt-2 bg-yellow-100 text-yellow-800 text-xs">READY</Badge>
+                      <Badge className="mt-2 bg-green-100 text-green-800 text-xs">DEPLOYED</Badge>
                     </CardContent>
                   </Card>
                 </div>

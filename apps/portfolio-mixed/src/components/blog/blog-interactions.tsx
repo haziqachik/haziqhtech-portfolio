@@ -9,7 +9,6 @@ import {
   Bookmark, 
   Eye, 
   Clock, 
-  Twitter, 
   Linkedin, 
   Link2, 
   Download,
@@ -64,9 +63,7 @@ export function BlogInteractions({ slug, title, readingTime, pageViews = 0 }: Bl
     const url = `https://haziqhtech.sg/blog/${slug}`;
     const text = `Check out this article: ${title}`;
 
-    if (platform === 'twitter') {
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-    } else if (platform === 'linkedin') {
+    if (platform === 'linkedin') {
       window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
     } else if (platform === 'copy') {
       try {
@@ -160,21 +157,12 @@ export function BlogInteractions({ slug, title, readingTime, pageViews = 0 }: Bl
           <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wider">
             Share On
           </h3>
-          <div className="grid grid-cols-2 gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleShare('twitter')}
-              className="justify-start text-blue-500 hover:text-blue-600"
-            >
-              <Twitter className="h-4 w-4 mr-2" />
-              Twitter
-            </Button>
+          <div className="flex gap-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => handleShare('linkedin')}
-              className="justify-start text-blue-700 hover:text-blue-800"
+              className="justify-start text-blue-700 hover:text-blue-800 flex-1"
             >
               <Linkedin className="h-4 w-4 mr-2" />
               LinkedIn
