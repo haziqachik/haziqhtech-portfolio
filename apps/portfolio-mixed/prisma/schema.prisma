@@ -1,17 +1,17 @@
 // Multi-Database Prisma Schema for Portfolio
-// SQLite: Blog Comments | Postgres: Analytics & Contact | MongoDB: Projects
+// PostgreSQL: Blog Comments & Analytics | MongoDB: Projects
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 // =============================================================================
-// SQLITE DATABASE - Blog Comments System
+// POSTGRESQL DATABASE - Blog Comments & Analytics
 // =============================================================================
 
 model BlogComment {
