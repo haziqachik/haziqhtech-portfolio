@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Settings, Database, BarChart3, MessageCircle, Home, ExternalLink } from "lucide-react"
+import { AIModerationPanel } from "@/components/admin/ai-moderation-panel"
 
 export default function AdminDashboard() {
   return (
@@ -228,6 +229,9 @@ export default function AdminDashboard() {
             </div>
           </CardContent>
         </Card>
+
+        {/* AI Moderation Panel */}
+        <AIModerationPanel />
 
         {/* Next Steps */}
         <Card className="border-primary/20 bg-primary/5">

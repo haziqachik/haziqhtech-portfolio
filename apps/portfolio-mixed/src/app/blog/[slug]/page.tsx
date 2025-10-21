@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog";
 import { CommentSection } from "@/components/comments";
+import { CommentSectionWithFallback } from "@/components/comments/comment-section-with-fallback";
 import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 import { BlogInteractions } from "@/components/blog/blog-interactions";
 import { BlogHeroImage } from "@/components/blog/blog-image";
@@ -106,12 +107,9 @@ export default async function Page({ params }: { params: Promise<Params> }) {
           </aside>
         </div>
 
-        {/* Comment Section */}
+        {/* Comment Section with Fallback */}
         <section className="w-full">
-          <CommentSection 
-            postId={post.slug} 
-            title="Join the Discussion"
-          />
+          <CommentSectionWithFallback postSlug={post.slug} />
         </section>
 
         <Card className="border-border/70 bg-card/90">

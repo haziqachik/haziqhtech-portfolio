@@ -79,19 +79,28 @@ export function CommentList({ postId, refreshTrigger }: CommentListProps) {
   }
 
   if (error) {
+    // Check if the error is about database configuration (503)
+    const isConfigError = error.includes('serverless') || error.includes('unavailable') || error.includes('storage unavailable')
+    
     return (
       <Card className="w-full max-w-2xl">
         <CardContent className="p-6">
           <div className="text-center py-8">
             <MessageCircle className="h-12 w-12 mx-auto mb-4 text-muted-foreground opacity-50" />
-            <h3 className="text-lg font-semibold mb-2">Comments Temporarily Unavailable</h3>
+            <h3 className="text-lg font-semibold mb-2">
+              {isConfigError ? 'Comments Temporarily Disabled' : 'Comments Temporarily Unavailable'}
+            </h3>
             <p className="text-muted-foreground mb-4">
-              The comment system is connecting to the database. This usually resolves quickly.
+              {isConfigError 
+                ? 'The comment system is being upgraded to a production database. Check back soon!'
+                : 'The comment system is connecting to the database. This usually resolves quickly.'}
             </p>
-            <Button onClick={loadComments} variant="outline" size="sm">
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Reconnect
-            </Button>
+            {!isConfigError && (
+              <Button onClick={loadComments} variant="outline" size="sm">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Reconnect
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>

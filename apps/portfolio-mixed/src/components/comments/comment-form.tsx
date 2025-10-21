@@ -47,7 +47,12 @@ export function CommentForm({ postId, onCommentAdded }: CommentFormProps) {
         alert("Comment added successfully!")
       } else {
         const error = await response.json()
-        alert(`Error: ${error.error}`)
+        // Check if it's a database configuration issue (503)
+        if (response.status === 503) {
+          alert("Comments are temporarily disabled while we upgrade to a production database. Please check back soon!")
+        } else {
+          alert(`Error: ${error.error}`)
+        }
       }
     } catch (error) {
       console.error("Error submitting comment:", error)
