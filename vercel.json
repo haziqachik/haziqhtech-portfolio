@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd apps/portfolio-mixed && npm install && npx prisma generate && npm run build",
+  "devCommand": "cd apps/portfolio-mixed && npm run dev",
+  "installCommand": "npm install --prefix apps/portfolio-mixed",
+  "outputDirectory": "apps/portfolio-mixed/.next",
+  "framework": "nextjs"
+}
