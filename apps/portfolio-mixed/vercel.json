@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install",
+  "buildCommand": "cd apps/portfolio-mixed && npm install && npm run build",
+  "outputDirectory": "apps/portfolio-mixed/.next",
+  "installCommand": "npm install --prefix apps/portfolio-mixed",
   "framework": "nextjs",
   "regions": [
     "sin1"
