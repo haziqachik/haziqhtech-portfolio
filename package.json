@@ -17,7 +17,7 @@
                     "lint:portfolio":  "npm --workspace apps/portfolio run lint",
                     "lint:timeline":  "npm --workspace apps/timeline run lint",
                                             "fmt":  "prettier . --write",
-                                            "prepare": "husky",
+                                            "prepare": "husky || true",
                                             "check:bom": "node scripts/remove-bom.js --check",
                                             "fix:bom": "node scripts/remove-bom.js --fix",
                     "start":  "npm run start --workspace portfolio"
