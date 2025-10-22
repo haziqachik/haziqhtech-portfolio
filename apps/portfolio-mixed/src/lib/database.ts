@@ -11,6 +11,18 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+// Runtime guard: Prevent accidentally using a file-based SQLite DB in production
+const rawDatabaseUrl = process.env.DATABASE_URL ?? '';
+if (process.env.NODE_ENV === 'production') {
+  if (rawDatabaseUrl.startsWith('file:')) {
+    console.error('\n\n⚠️ FATAL: Detected file-based SQLite DATABASE_URL in production environment.');
+    console.error('This environment is not suitable for file-based SQLite. Please set a managed Postgres DB and update the DATABASE_URL environment variable.');
+    console.error(`Detected DATABASE_URL: ${rawDatabaseUrl}`);
+    // Keep running but Prisma will fail with clear log; alternatively throw to fail fast:
+    // throw new Error('File-based SQLite is not allowed in production');
+  }
+}
+
 export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
