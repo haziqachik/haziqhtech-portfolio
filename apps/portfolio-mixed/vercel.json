@@ -1,11 +1,9 @@
 {
   "version": 2,
-  "env": {
-    "DATABASE_URL": "file:./portfolio.db",
-    "MONGODB_URI": "mongodb+srv://AdminhzDBweb:33HzS9823465i+1998@hzwebportfoliocluster.imubfze.mongodb.net/haziq-portfolio",
-    "USE_MOCK_MONGODB": "false",
-    "NEXTAUTH_SECRET": "haziq-portfolio-production-2025-secure-key-auto-deploy"
-  },
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
   "regions": [
     "sin1"
   ]
