@@ -8,17 +8,53 @@ export function ReadingProgress() {
 
   useEffect(() => {
     const updateProgress = () => {
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
-      const scrolled = window.scrollY;
-      const progress = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
-      setProgress(Math.min(100, Math.max(0, progress)));
+      // Try to find the main article content for more accurate progress
+      // Priority: .prose (MDX content) > article > main > fallback to full page
+      const content = 
+        document.querySelector('.prose') || 
+        document.querySelector('article') || 
+        document.querySelector('main');
+      
+      if (content) {
+        // Calculate progress based on content position
+        const contentRect = content.getBoundingClientRect();
+        const contentTop = contentRect.top + window.scrollY;
+        const contentHeight = contentRect.height;
+        const windowHeight = window.innerHeight;
+        
+        // Start progress when content enters viewport, reach 100% when fully scrolled
+        const scrollPosition = window.scrollY + windowHeight;
+        const contentStart = contentTop;
+        const contentEnd = contentTop + contentHeight;
+        
+        // Progress from 0 when content starts entering viewport to 100% when bottom reaches viewport
+        const scrolled = scrollPosition - contentStart;
+        const totalScrollable = contentEnd - contentStart - windowHeight;
+        
+        const calculatedProgress = totalScrollable > 0 ? (scrolled / totalScrollable) * 100 : 0;
+        setProgress(Math.min(100, Math.max(0, calculatedProgress)));
+      } else {
+        // Fallback to full page calculation
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight - windowHeight;
+        const scrolled = window.scrollY;
+        const calculatedProgress = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
+        setProgress(Math.min(100, Math.max(0, calculatedProgress)));
+      }
     };
 
-    window.addEventListener("scroll", updateProgress);
-    updateProgress(); // Initial calculation
+    // Delay initial calculation to ensure DOM is fully rendered
+    const timeoutId = setTimeout(updateProgress, 100);
     
-    return () => window.removeEventListener("scroll", updateProgress);
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    // Add resize listener to recalculate on window resize
+    window.addEventListener("resize", updateProgress);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
   }, []);
 
   return (
