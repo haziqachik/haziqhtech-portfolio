@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAllBlogPosts, getBlogPost } from "@/lib/blog";
-import { CommentSection } from "@/components/comments";
 import { CommentSectionWithFallback } from "@/components/comments/comment-section-with-fallback";
 import { PageViewTracker } from "@/components/analytics/page-view-tracker";
 import { BlogInteractions } from "@/components/blog/blog-interactions";
-import { BlogHeroImage } from "@/components/blog/blog-image";
+import { ReadingProgress } from "@/components/blog/reading-progress";
+import { prisma } from "@/lib/database";
 
 type Params = { slug: string };
 
@@ -34,6 +34,18 @@ export default async function Page({ params }: { params: Promise<Params> }) {
     const p = await params;
     const post = await getBlogPost(p.slug);
 
+    // Fetch real view count from database
+    let pageViews = 0;
+    try {
+      const viewCount = await prisma.blogView.count({
+        where: { postSlug: post.slug }
+      });
+      pageViews = viewCount;
+    } catch (error) {
+      console.error('Failed to fetch view count:', error);
+      pageViews = 0; // Fallback to 0 if DB query fails
+    }
+
     const formattedDate = new Date(post.date).toLocaleDateString(undefined, {
       year: "numeric",
       month: "long",
@@ -42,6 +54,9 @@ export default async function Page({ params }: { params: Promise<Params> }) {
 
   return (
       <article className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-4 md:px-0">
+        {/* Reading Progress Indicator */}
+        <ReadingProgress />
+        
         {/* Analytics Tracking */}
         <PageViewTracker pageId={`blog-${post.slug}`} title={post.title} />
         <header className="relative overflow-hidden rounded-3xl border border-primary/25 bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.18),_transparent_65%)] p-10 shadow-lg shadow-primary/10 md:p-14">
@@ -83,7 +98,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
               slug={post.slug}
               title={post.title}
               readingTime={`${post.readingTime} min`}
-              pageViews={Math.floor(Math.random() * 1000) + 100} // Mock data for now
+              pageViews={pageViews}
             />
 
             {/* Table of Contents */}

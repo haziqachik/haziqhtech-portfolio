@@ -8,6 +8,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { visit } from "unist-util-visit";
 import { toString } from "mdast-util-to-string";
+import readingTime from "reading-time";
 
 export type BlogHeading = { id: string; title: string; depth: number };
 export type BlogPostMeta = {
@@ -67,12 +68,18 @@ export function getAllBlogPosts(includeContent = false) {
     const raw = fs.readFileSync(path.join(blogDirectory, file), "utf-8");
     const parsed = matter(raw) as unknown as { data: any; content: string };
     const meta = parsed.data as Record<string, any>;
+    
+    // Calculate reading time from content
+    const stats = readingTime(parsed.content);
+    const readingTimeMinutes = Math.ceil(stats.minutes);
+    
     return {
       slug,
       title: String(meta.title ?? slug),
       date: String(meta.date ?? ""),
       summary: String(meta.summary ?? ""),
       tags: Array.isArray(meta.tags) ? meta.tags.map(String) : [],
+      readingTime: readingTimeMinutes,
       content: includeContent ? parsed.content : undefined,
     } as any;
   });
@@ -86,13 +93,17 @@ export async function getBlogPost(slug: string) {
   const meta = parsed.data as Record<string, any>;
   const { compiled, toc } = await compileSource(parsed.content);
 
+  // Calculate reading time from content
+  const stats = readingTime(parsed.content);
+  const readingTimeMinutes = Math.ceil(stats.minutes);
+
   return {
     slug,
     title: String(meta.title ?? slug),
     date: String(meta.date ?? ""),
     summary: String(meta.summary ?? ""),
     tags: Array.isArray(meta.tags) ? meta.tags.map(String) : [],
-    readingTime: meta.readingTime,
+    readingTime: readingTimeMinutes,
     content: compiled,
     toc,
   } as any;
