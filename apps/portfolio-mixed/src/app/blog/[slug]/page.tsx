@@ -23,6 +23,19 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     return {
       title: `${post.title} | Haziq Asyraaf`,
       description: post.summary,
+      openGraph: {
+        title: post.title,
+        description: post.summary,
+        type: 'article',
+        publishedTime: post.date,
+        authors: ['Haziq Asyraaf'],
+        tags: post.tags,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: post.title,
+        description: post.summary,
+      },
     };
   } catch {
     return { title: "Post not found" };
@@ -54,6 +67,28 @@ export default async function Page({ params }: { params: Promise<Params> }) {
 
   return (
       <article className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-4 md:px-0">
+        {/* JSON-LD Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              headline: post.title,
+              description: post.summary,
+              author: {
+                '@type': 'Person',
+                name: 'Haziq Asyraaf',
+                url: 'https://haziqhtech.sg',
+              },
+              datePublished: post.date,
+              keywords: post.tags.join(', '),
+              wordCount: post.readingTime * 200, // Approximate
+              timeRequired: `PT${post.readingTime}M`,
+            }),
+          }}
+        />
+        
         {/* Reading Progress Indicator */}
         <ReadingProgress />
         
@@ -110,8 +145,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
                     <a
                       key={h.id}
                       href={`#${h.id}`}
-                      className="block rounded-lg px-3 py-2 transition hover:bg-muted hover:text-foreground"
-                      style={{ marginLeft: h.depth > 2 ? 16 : 0 }}
+                      className={`block rounded-lg px-3 py-2 transition hover:bg-muted hover:text-foreground ${h.depth > 2 ? 'ml-4' : ''}`}
                     >
                       {h.title}
                     </a>
