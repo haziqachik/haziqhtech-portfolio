@@ -1,10 +1,6 @@
 {
-  "version": 2,
-  "buildCommand": "cd apps/portfolio-mixed && npm install && npm run build",
-  "outputDirectory": "apps/portfolio-mixed/.next",
-  "installCommand": "npm install --prefix apps/portfolio-mixed",
-  "framework": "nextjs",
-  "regions": [
-    "sin1"
-  ]
+  "buildCommand": "prisma generate && next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs"
 }
