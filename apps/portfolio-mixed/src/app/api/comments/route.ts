@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { blogComments } from '@/lib/database';
 
+console.log('⚙️ [comments/route] Startup - NODE_ENV=', process.env.NODE_ENV);
+console.log('⚙️ [comments/route] Resolved DATABASE_URL (first 100 chars):', (process.env.DATABASE_URL || '').substring(0, 100));
+
 // Detect common serverless + SQLite misconfiguration (e.g., Vercel with file: DB)
 function isServerlessWithSqlite() {
   const db = process.env.DATABASE_URL || '';
@@ -21,10 +24,25 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const comments = await blogComments.getByPost(postSlug);
+    // Debug logging
+    console.log('[Comments API] DATABASE_URL:', process.env.DATABASE_URL?.substring(0, 30));
+    console.log('[Comments API] Attempting to fetch comments for:', postSlug);
+    
+    const comments = await (async () => {
+      try {
+        console.log('⚙️ [comments/route] Calling blogComments.getByPost', postSlug);
+        const res = await blogComments.getByPost(postSlug);
+        console.log('⚙️ [comments/route] blogComments.getByPost returned, count=', Array.isArray(res)?res.length:0);
+        return res;
+      } catch (err) {
+        console.error('⚠️ [comments/route] Error inside blogComments.getByPost', err);
+        throw err;
+      }
+    })();
     return NextResponse.json({ comments });
   } catch (error) {
     console.error('Failed to fetch comments:', error);
+    console.error('[Comments API] DATABASE_URL at error:', process.env.DATABASE_URL?.substring(0, 50));
     // If running serverless with a file-based SQLite DB, surface a helpful message
     if (isServerlessWithSqlite()) {
       return NextResponse.json(
