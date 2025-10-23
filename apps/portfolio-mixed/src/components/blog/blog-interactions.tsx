@@ -15,6 +15,7 @@ import {
   ExternalLink 
 } from "lucide-react";
 import { motion } from "framer-motion";
+import useReadingProgress from './use-reading-progress';
 
 interface BlogInteractionsProps {
   slug: string;
@@ -41,6 +42,8 @@ export function BlogInteractions({ slug, title, readingTime, pageViews = 0 }: Bl
     setHasLiked(savedLiked);
     setHasBookmarked(savedBookmarked);
   }, [slug]);
+
+  const progress = useReadingProgress();
 
   const handleLike = () => {
     const newLiked = !hasLiked;
@@ -79,9 +82,17 @@ export function BlogInteractions({ slug, title, readingTime, pageViews = 0 }: Bl
       } catch (err) {
         console.error('Error sharing:', err);
       }
+    } else {
+      // Fallback for desktop browsers without navigator.share
+      try {
+        await navigator.clipboard.writeText(url);
+        setIsSharing(true);
+        setTimeout(() => setIsSharing(false), 2000);
+      } catch (err) {
+        console.error('Error copying fallback:', err);
+      }
     }
   };
-
   if (!mounted) return null;
 
   return (
@@ -212,12 +223,12 @@ export function BlogInteractions({ slug, title, readingTime, pageViews = 0 }: Bl
         <div className="space-y-2">
           <div className="flex justify-between text-xs text-muted-foreground">
             <span>Reading Progress</span>
-            <span>0%</span>
+            <span>{Math.round(progress)}%</span>
           </div>
           <div className="w-full bg-muted rounded-full h-2">
             <div 
               className="bg-primary h-2 rounded-full transition-all duration-300"
-              style={{ width: '0%' }}
+              style={{ width: `${progress}%` }}
             />
           </div>
         </div>

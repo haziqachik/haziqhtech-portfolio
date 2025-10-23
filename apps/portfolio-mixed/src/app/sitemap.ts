@@ -5,12 +5,23 @@ const baseUrl = 'https://haziqhtech.sg';
 export default function sitemap() {
   const blogPosts = getAllBlogPosts();
   
-  const blogUrls = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }));
+  const blogUrls = blogPosts.map((post) => {
+    // Ensure valid date or fallback to current date
+    let lastModified: Date;
+    try {
+      const parsedDate = new Date(post.date);
+      lastModified = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
+    } catch {
+      lastModified = new Date();
+    }
+    
+    return {
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    };
+  });
 
   const routes = ['', '/about', '/architecture', '/projects', '/timeline', '/blog', '/resume', '/contact'].map(
     (route) => ({
