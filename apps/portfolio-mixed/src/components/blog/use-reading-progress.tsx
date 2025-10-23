@@ -2,9 +2,53 @@
 
 import { useEffect, useState } from "react";
 
+// Generate or retrieve anonymous user ID
+function getUserId(): string {
+  if (typeof window === 'undefined') return '';
+  
+  let userId = localStorage.getItem('readingProgressUserId');
+  if (!userId) {
+    userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    localStorage.setItem('readingProgressUserId', userId);
+  }
+  return userId;
+}
+
 // Hook: returns progress percentage (0-100) for the main article/content
-export default function useReadingProgress() {
+// Now with persistent storage - saves to DB and resumes on return
+export default function useReadingProgress(postSlug?: string) {
   const [progress, setProgress] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load saved progress on mount
+  useEffect(() => {
+    if (!postSlug) {
+      setIsLoaded(true);
+      return;
+    }
+
+    const userId = getUserId();
+    
+    // Fetch saved progress from database
+    fetch(`/api/blog/progress?slug=${postSlug}&userId=${userId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.progress > 0) {
+          setProgress(data.progress);
+          // Optionally scroll to saved position
+          if (data.lastPosition > 0) {
+            setTimeout(() => {
+              window.scrollTo({ top: data.lastPosition, behavior: 'smooth' });
+            }, 300);
+          }
+        }
+        setIsLoaded(true);
+      })
+      .catch(err => {
+        console.error('Failed to load reading progress:', err);
+        setIsLoaded(true);
+      });
+  }, [postSlug]);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -75,6 +119,30 @@ export default function useReadingProgress() {
       window.removeEventListener('resize', updateProgress);
     };
   }, []);
+
+  // Auto-save progress to database (debounced)
+  useEffect(() => {
+    if (!postSlug || !isLoaded) return;
+
+    const userId = getUserId();
+    const saveProgress = setTimeout(() => {
+      // Only save if progress is meaningful (> 0%)
+      if (progress > 0) {
+        fetch('/api/blog/progress', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            slug: postSlug,
+            userId,
+            progress: Math.round(progress),
+            lastPosition: window.scrollY,
+          }),
+        }).catch(err => console.error('Failed to save progress:', err));
+      }
+    }, 2000); // Debounce: save 2 seconds after user stops scrolling
+
+    return () => clearTimeout(saveProgress);
+  }, [progress, postSlug, isLoaded]);
 
   return progress;
 }

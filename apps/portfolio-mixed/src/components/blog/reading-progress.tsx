@@ -3,8 +3,12 @@
 import { motion } from "framer-motion";
 import useReadingProgress from "./use-reading-progress";
 
-export function ReadingProgress() {
-  const progress = useReadingProgress();
+interface ReadingProgressProps {
+  postSlug?: string;
+}
+
+export function ReadingProgress({ postSlug }: ReadingProgressProps) {
+  const progress = useReadingProgress(postSlug);
 
   return (
     <>

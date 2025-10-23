@@ -43,7 +43,7 @@ export function BlogInteractions({ slug, title, readingTime, pageViews = 0 }: Bl
     setHasBookmarked(savedBookmarked);
   }, [slug]);
 
-  const progress = useReadingProgress();
+  const progress = useReadingProgress(slug);
 
   const handleLike = () => {
     const newLiked = !hasLiked;

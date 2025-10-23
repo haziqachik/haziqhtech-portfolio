@@ -90,7 +90,7 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         />
         
         {/* Reading Progress Indicator */}
-        <ReadingProgress />
+        <ReadingProgress postSlug={post.slug} />
         
         {/* Analytics Tracking */}
         <PageViewTracker pageId={`blog-${post.slug}`} title={post.title} />
