@@ -20,18 +20,43 @@ export default function useReadingProgress() {
         const contentHeight = rect.height;
         const windowHeight = window.innerHeight;
 
-        const scrollPosition = window.scrollY + windowHeight;
-        const contentStart = contentTop;
-        const contentEnd = contentTop + contentHeight;
+        // For very short content (less than viewport height), use simple visibility progress
+        if (contentHeight < windowHeight) {
+          // Content is shorter than viewport - calculate based on what's visible
+          const viewportTop = window.scrollY;
+          const viewportBottom = viewportTop + windowHeight;
+          const contentBottom = contentTop + contentHeight;
+          
+          // Start showing progress when content enters viewport
+          if (contentTop < viewportBottom && contentBottom > viewportTop) {
+            // Calculate how much of the content is visible
+            const visibleTop = Math.max(contentTop, viewportTop);
+            const visibleBottom = Math.min(contentBottom, viewportBottom);
+            const visibleHeight = visibleBottom - visibleTop;
+            const visiblePercentage = (visibleHeight / contentHeight) * 100;
+            
+            setProgress(Math.min(100, Math.max(0, visiblePercentage)));
+          } else if (contentBottom <= viewportTop) {
+            // Content is above viewport - fully read
+            setProgress(100);
+          } else {
+            // Content is below viewport - not yet read
+            setProgress(0);
+          }
+        } else {
+          // Normal long content - use scroll-based calculation
+          const scrollPosition = window.scrollY + windowHeight;
+          const contentStart = contentTop;
+          const contentEnd = contentTop + contentHeight;
 
-        // totalScrollable is the distance the bottom of the viewport must move
-        // from the moment the content enters the viewport to when its bottom reaches the viewport bottom
-        const totalScrollable = contentEnd - contentStart - windowHeight;
-        const scrolled = scrollPosition - contentStart;
+          const totalScrollable = contentEnd - contentStart - windowHeight;
+          const scrolled = scrollPosition - contentStart;
 
-        const calculated = totalScrollable > 0 ? (scrolled / totalScrollable) * 100 : 0;
-        setProgress(Math.min(100, Math.max(0, calculated)));
+          const calculated = totalScrollable > 0 ? (scrolled / totalScrollable) * 100 : 0;
+          setProgress(Math.min(100, Math.max(0, calculated)));
+        }
       } else {
+        // Fallback to full page calculation
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight - windowHeight;
         const scrolled = window.scrollY;

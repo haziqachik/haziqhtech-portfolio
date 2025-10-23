@@ -94,6 +94,20 @@ export default async function Page({ params }: { params: Promise<Params> }) {
         
         {/* Analytics Tracking */}
         <PageViewTracker pageId={`blog-${post.slug}`} title={post.title} />
+
+        {/* Back to Blog Button */}
+        <div className="flex justify-start">
+          <Link 
+            href="/blog"
+            className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Back to all posts
+          </Link>
+        </div>
+        
         <header className="relative overflow-hidden rounded-3xl border border-primary/25 bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.18),_transparent_65%)] p-10 shadow-lg shadow-primary/10 md:p-14">
           <div className="flex flex-col gap-5">
             <Badge variant="secondary" className="w-fit">{formattedDate}</Badge>

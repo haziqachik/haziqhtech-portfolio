@@ -44,6 +44,18 @@ model BlogView {
   @@map("blog_views")
 }
 
+model ReadingProgress {
+  id           Int      @id @default(autoincrement())
+  postSlug     String   // Which post
+  userId       String   // Anonymous user ID (stored in localStorage)
+  progress     Float    // Progress percentage (0-100)
+  lastPosition Int      // Scroll position in pixels
+  updatedAt    DateTime @updatedAt @default(now())
+  
+  @@unique([postSlug, userId])
+  @@map("reading_progress")
+}
+
 // Basic Analytics using SQLite (fallback when Postgres isn't available)
 model PageView {
   id        Int      @id @default(autoincrement())
