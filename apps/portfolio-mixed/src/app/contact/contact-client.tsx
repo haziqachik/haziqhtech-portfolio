@@ -109,6 +109,27 @@ export default function ContactClient({ email, endpoint }: ContactClientProps) {
     setStatus("loading");
     setStatusMessage("Sending your message...");
 
+    // Try our API endpoint first (using Resend)
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus("success");
+        setStatusMessage("Thanks! Your message has been sent successfully. I'll get back to you soon! 🎉");
+        setFormData({ name: "", email: "", message: "" });
+        return;
+      }
+    } catch (error) {
+      console.error('API contact error:', error);
+    }
+
+    // Fallback: Try EmailJS
     const viaEmailJs = await submitWithEmailJs();
     if (viaEmailJs) {
       setStatus("success");
@@ -117,6 +138,7 @@ export default function ContactClient({ email, endpoint }: ContactClientProps) {
       return;
     }
 
+    // Fallback: Try Formspree
     const sent = await submitToFormspree();
     if (sent) {
       setStatus("success");
@@ -125,6 +147,7 @@ export default function ContactClient({ email, endpoint }: ContactClientProps) {
       return;
     }
 
+    // Final fallback: Open mail client
     const subject = encodeURIComponent(`Message from ${formData.name}`);
     const body = encodeURIComponent(`${formData.message}\n\nReply to: ${formData.email}`);
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
