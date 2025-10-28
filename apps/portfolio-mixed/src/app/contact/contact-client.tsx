@@ -119,11 +119,15 @@ export default function ContactClient({ email, endpoint }: ContactClientProps) {
 
       const data = await response.json();
 
+      console.log('API Response:', { status: response.status, ok: response.ok, data });
+
       if (response.ok && data.success) {
         setStatus("success");
         setStatusMessage("Thanks! Your message has been sent successfully. I'll get back to you soon! 🎉");
         setFormData({ name: "", email: "", message: "" });
         return;
+      } else {
+        console.error('API returned error:', data);
       }
     } catch (error) {
       console.error('API contact error:', error);
