@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend lazily to avoid build-time errors
+let resend: Resend | null = null;
+function getResend() {
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -37,7 +44,7 @@ export async function POST(request: Request) {
     // Send email using Resend
     const recipientEmail = process.env.CONTACT_EMAIL || "haziqh@haziqhtech.sg";
     
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResend().emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>", // Use verified domain or onboarding@resend.dev
       to: recipientEmail,
       replyTo: email,
