@@ -392,7 +392,7 @@ export function HeaderNav() {
                     {[
                       { icon: Github, href: "https://github.com/haziqhtech", label: "GitHub" },
                       { icon: Linkedin, href: "https://linkedin.com/in/haziqasyraaf-sg", label: "LinkedIn" },
-                      { icon: Mail, href: "mailto:haziq@haziqhtech.sg", label: "Email" }
+                      { icon: Mail, href: "mailto:haziqh@haziqhtech.sg", label: "Email" }
                     ].map((social) => (
                       <SheetClose asChild key={social.label}>
                         <motion.a

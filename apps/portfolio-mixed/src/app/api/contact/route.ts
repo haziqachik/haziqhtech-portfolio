@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     }
 
     // Send email using Resend
-    const recipientEmail = process.env.CONTACT_EMAIL || "haziq@haziqhtech.sg";
+    const recipientEmail = process.env.CONTACT_EMAIL || "haziqh@haziqhtech.sg";
     
     const { data, error } = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>", // Use verified domain or onboarding@resend.dev

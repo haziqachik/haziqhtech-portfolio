@@ -362,7 +362,7 @@ export function HeaderNav() {
                     {[
                       { icon: Github, href: "https://github.com/haziqachik", label: "GitHub" },
                       { icon: Linkedin, href: "https://linkedin.com/in/haziqasyraaf-sg", label: "LinkedIn" },
-                      { icon: Mail, href: "mailto:haziq@haziqhtech.sg", label: "Email" }
+                      { icon: Mail, href: "mailto:haziqh@haziqhtech.sg", label: "Email" }
                     ].map((social) => (
                       <a
                         key={social.label}
