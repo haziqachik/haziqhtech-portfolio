@@ -44,18 +44,6 @@ model BlogView {
   @@map("blog_views")
 }
 
-model ReadingProgress {
-  id           Int      @id @default(autoincrement())
-  postSlug     String   // Which post
-  userId       String   // Anonymous user ID (stored in localStorage)
-  progress     Float    // Progress percentage (0-100)
-  lastPosition Int      // Scroll position in pixels
-  updatedAt    DateTime @updatedAt @default(now())
-  
-  @@unique([postSlug, userId])
-  @@map("reading_progress")
-}
-
 // Basic Analytics using SQLite (fallback when Postgres isn't available)
 model PageView {
   id        Int      @id @default(autoincrement())
@@ -77,6 +65,18 @@ model ContactForm {
   createdAt DateTime @default(now())
   ipAddress String?
   status    String   @default("unread") // unread, read, replied
-  
+
   @@map("contact_forms")
+}
+
+model ReadingProgress {
+  id           Int      @id @default(autoincrement())
+  postSlug     String
+  userId       String
+  progress     Float    @default(0) // Scroll progress (0-100%)
+  lastPosition Int      @default(0) // Last scroll position in pixels
+  updatedAt    DateTime @updatedAt
+  
+  @@unique([postSlug, userId])
+  @@map("reading_progress")
 }
