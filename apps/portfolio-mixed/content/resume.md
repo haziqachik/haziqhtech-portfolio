@@ -22,7 +22,8 @@
 
 ## Summary## Experience
 
-CEH-certified IT professional with hands-on experience in system support, data analytics, and automation. Skilled in resolving technical issues across diverse environments, managing survey operations, and delivering analytics dashboards. Strong foundation in Python, Power BI, UiPath RPA, and network fundamentals. Currently pursuing CCNA certification while maintaining SLA-driven support excellence.
+## Summary
+CEH-certified IT professional with hands-on experience in system support, data analytics, and automation. Skilled in resolving technical issues across diverse environments, managing survey operations, and delivering analytics dashboards. Strong foundation in Python, Power BI, UiPath RPA, and network fundamentals. Currently pursuing CCNA certification. **Open to opportunities in IT support, data analytics, automation, and security roles.**
 
 ### Building Construction Authority (BCA) - Executive, Data Analyst  
 

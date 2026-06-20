@@ -1,0 +1,15 @@
+{
+  "currentDate": "2026-06-20",
+  "employmentStatus": "JOB_SEARCH",
+  "lastJobEndDate": "2026-03-31",
+  "currentRole": null,
+  "jobSearchDurationMonths": 3,
+  "notes": "Looking for next opportunity in IT/Data Analytics/Security",
+  "resumeLastUpdated": "2026-06-20",
+  "websiteLastDeployed": "2026-06-20",
+  "changes": [
+    "Removed ATT Group from current role",
+    "Added job search status",
+    "Highlighted available for opportunities"
+  ]
+}
