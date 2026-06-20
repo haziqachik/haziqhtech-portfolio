@@ -3,10 +3,10 @@
 [Download PDF](/Haziq_Asyraaf_CV.pdf)
 <!-- RESUME_PDF_END -->
 # Haziq Asyraaf
-**Network Security Engineer** | Singapore  
+**Network Security Engineer** | Singapore
 +65 9487 4556 | haziqh@hotmail.com | [linkedin.com/in/haziqasyraaf-sg](https://linkedin.com/in/haziqasyraaf-sg) | [github.com/haziqachik](https://github.com/haziqachik)
 
-## Summary
+*Last updated: June 20, 2026*## Summary
 CEH-certified technologist pivoting into network and security engineering. I blend automation, analytics, and lab experience: secure Power BI dashboards for regulators, UiPath/FormSG workflow automation, and ongoing CCNA/AZ-500 labs. Known for rapid learning, clear documentation, and tightening operational controls through self-initiated projects.
 
 ## Experience
