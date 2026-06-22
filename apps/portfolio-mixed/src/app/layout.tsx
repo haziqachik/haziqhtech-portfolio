@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 // site-nav types no longer used here; navigation handled in HeaderNav
 import HeaderNav from "@/components/header-nav-fixed";
+import { GoogleAnalytics } from "@/components/google-analytics";
 import { getProfile } from "@/lib/content";
 import "./globals.css";
 
@@ -62,6 +63,7 @@ export default function RootLayout({
         <meta name="color-scheme" content="light dark" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background antialiased`}>
+        <GoogleAnalytics />
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col">
             <HeaderNav />
