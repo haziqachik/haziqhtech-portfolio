@@ -1,4 +1,8 @@
-[
+﻿[
+  { "name": "IT Support & Help Desk", "level": "Advanced", "group": "Support" },
+  { "name": "System Troubleshooting & Diagnostics", "level": "Advanced", "group": "Support" },
+  { "name": "Customer Service & Technical Communication", "level": "Advanced", "group": "Support" },
+  { "name": "System Administration & Configuration", "level": "Intermediate", "group": "Infrastructure" },
   { "name": "Network Fundamentals (CCNA Labs)", "level": "In Progress", "group": "Security" },
   { "name": "Firewall & ACL Hardening", "level": "Intermediate", "group": "Security" },
   { "name": "Vulnerability Assessment & CEH Playbooks", "level": "Intermediate", "group": "Security" },
@@ -7,5 +11,7 @@
   { "name": "UiPath RPA & FormSG Automation", "level": "Advanced", "group": "Automation" },
   { "name": "Python Automation (Netmiko, Pandas)", "level": "Intermediate", "group": "Engineering" },
   { "name": "Postman & API Testing", "level": "Intermediate", "group": "Tooling" },
-  { "name": "Documentation & Stakeholder Enablement", "level": "Advanced", "group": "Collaboration" }
+  { "name": "Documentation & Technical Writing", "level": "Advanced", "group": "Collaboration" },
+  { "name": "Stakeholder Communication & Enablement", "level": "Advanced", "group": "Collaboration" },
+  { "name": "Change Management & SOP Development", "level": "Intermediate", "group": "Operations" }
 ]
